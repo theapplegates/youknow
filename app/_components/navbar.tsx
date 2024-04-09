@@ -1,9 +1,9 @@
 'use client'
 
 import cn from 'clsx'
-import { Link } from '@/app/_components/transition-link'
 import { usePathname } from 'next/navigation'
-import { useBrowserNativeTransitions } from '../_hooks/use-browser-native-transitions'
+import { Link } from '@/app/_components/transition-link'
+import { useBrowserNativeTransitions } from '@/app/_hooks/use-browser-native-transitions'
 
 function Item(props: React.ComponentProps<typeof Link>) {
   const pathname = usePathname()
@@ -18,7 +18,7 @@ function Item(props: React.ComponentProps<typeof Link>) {
   return (
     <li
       className={cn(
-        isActive ? 'text-rurikon-800' : 'text-rurikon-300',
+        isActive ? 'text-rurikon-800 cursor-default' : 'text-rurikon-300',
         'transition-colors'
       )}
     >

@@ -11,7 +11,7 @@
     font-variation-settings: 'wght' 300, var(--sans-variation);
   }
   .font-normal {
-    font-variation-settings: 'wght' 400, var(--sans-variation);
+    font-variation-settings: 'wght' 440, var(--sans-variation);
   }
   .font-medium {
     font-variation-settings: 'wght' 500, var(--sans-variation);
@@ -62,8 +62,10 @@ body {
     sans-serif;
   font-size: 16px;
   font-feature-settings: var(--font-features);
-  font-variation-settings: 'wght' 400, var(--sans-variation);
+  font-variation-settings: 'wght' 440, var(--sans-variation);
   font-variant: common-ligatures contextual;
+  text-decoration-skip-ink: auto;
+  text-spacing-trim: space-first;
   font-optical-sizing: auto;
   letter-spacing: 0.005em;
   word-spacing: -0.04em;
@@ -87,7 +89,7 @@ nav {
 blockquote {
   border-left: 1px solid var(--color-rurikon-300);
   padding-left: 2.5rem;
-  margin-left: calc(-2.5rem - 1px);
+  margin-left: -2.5rem;
 }
 
 main {
@@ -113,40 +115,44 @@ main {
   content: '······································································';
 }
 
-article {
-  view-transition-name: view;
-}
-
 @supports (view-transition-name: none) {
-  ::view-transition-image-pair(view) {
-    pointer-events: none;
-  }
+  @media not (prefers-reduced-motion: reduce) {
+    article {
+      view-transition-name: article;
+    }
 
-  ::view-transition-old(view) {
-    animation: hide 0.3s ease 1 forwards;
-  }
+    ::view-transition-old(article) {
+      animation: hide 0.5s ease 1 forwards;
+    }
 
-  ::view-transition-new(view) {
-    opacity: 0;
-    animation: appear 0.8s ease 1 forwards 0.2s;
+    ::view-transition-new(article) {
+      opacity: 0;
+      animation: appear 1s ease 1 forwards 0.1s;
+    }
   }
 }
 
 @keyframes hide {
-  from {
+  0% {
     opacity: 1;
   }
 
-  to {
+  80% {
     opacity: 0;
-    filter: blur(2px);
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: scale(1.01);
   }
 }
 
 @keyframes appear {
   0% {
     opacity: 0;
-    filter: blur(2px);
+    filter: blur(4px);
+    transform: scale(0.99);
   }
 
   80% {
