@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 
 import cn from 'clsx'
 import localFont from 'next/font/local'
+import { ViewTransitions } from 'next-view-transitions'
 
 import './globals.css'
 import Navbar from './_components/navbar'
-import { ViewTransitions } from './_components/view-transitions'
 
 const sans = localFont({
   src: './_fonts/InterVariable.woff2',
@@ -42,9 +42,9 @@ export default function RootLayout({
         >
           <div className='flex'>
             <Navbar />
-            <main className='relative flex-1 max-w-2xl pl-10 [contain:inline-size]'>
+            <main className='relative flex-1 max-w-2xl [contain:inline-size]'>
               <div className='absolute w-px h-full bg-rurikon-100/70 left-0' />
-              <article>{children}</article>
+              <article className='pl-10'>{children}</article>
             </main>
           </div>
         </body>

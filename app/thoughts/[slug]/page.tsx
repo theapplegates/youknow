@@ -1,8 +1,5 @@
 import { promises as fs } from 'fs'
 import path from 'path'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import { notFound } from 'next/navigation'
-import { components } from '@/mdx-components'
 
 export default async function Page({
   params,
@@ -11,25 +8,10 @@ export default async function Page({
     slug: string
   }
 }) {
-  const filepath = path.join(
-    process.cwd(),
-    'app',
-    'thoughts',
-    '_articles',
-    `${params.slug}.mdx`
-  )
+  const MDXContent = (await import('../_articles/' + `${params.slug}.mdx`))
+    .default
 
-  try {
-    if (!(await fs.lstat(filepath)).isFile()) {
-      notFound()
-    }
-  } catch {
-    notFound()
-  }
-
-  const content = await fs.readFile(filepath, 'utf8')
-
-  return <MDXRemote source={content} components={components} />
+  return <MDXContent />
 }
 
 export async function generateStaticParams() {

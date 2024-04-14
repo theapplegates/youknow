@@ -1,10 +1,10 @@
 import type { MDXComponents } from 'mdx/types'
+import type { FC } from 'react'
 import Link from 'next/link'
 
-export const components: Record<
-  string,
-  (props: Record<string, any>) => React.ReactNode
-> = {
+import { Card } from '@/app/_components/tweet-card'
+
+export const components: Record<string, FC<any>> = {
   h1: (props) => (
     <h1
       className='font-semibold mb-7 text-rurikon-600 text-balance'
@@ -30,6 +30,10 @@ export const components: Record<
       />
     ),
   p: (props) => <p className='mt-7' {...props} />,
+  blockquote: (props) => <blockquote {...props} />,
+  pre: (props) => <pre className='mt-7 whitespace-pre-wrap' {...props} />,
+  code: (props) => <code className='inline' {...props} />,
+  Card,
 }
 
 export function useMDXComponents(inherited: MDXComponents): MDXComponents {

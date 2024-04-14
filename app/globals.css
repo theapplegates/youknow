@@ -115,6 +115,10 @@ main {
   content: '······································································';
 }
 
+a {
+  cursor: default;
+}
+
 @supports (view-transition-name: none) {
   @media not (prefers-reduced-motion: reduce) {
     article {
@@ -122,12 +126,12 @@ main {
     }
 
     ::view-transition-old(article) {
-      animation: hide 0.5s ease 1 forwards;
+      animation: hide 0.3s ease 1 forwards 0.2s;
     }
 
     ::view-transition-new(article) {
       opacity: 0;
-      animation: appear 1s ease 1 forwards 0.1s;
+      animation: appear 1.5s ease 1 forwards;
     }
   }
 }
@@ -137,29 +141,28 @@ main {
     opacity: 1;
   }
 
-  80% {
-    opacity: 0;
-  }
-
   100% {
     opacity: 0;
-    filter: blur(8px);
-    transform: scale(1.01);
+    filter: blur(2px);
   }
 }
 
 @keyframes appear {
   0% {
-    opacity: 0;
-    filter: blur(4px);
-    transform: scale(0.99);
+    opacity: 1;
+    filter: blur(6px);
+    mask: linear-gradient(90deg, #000 25%, #000000e6 50%, #00000000) 150% 0 /
+      400% no-repeat;
   }
 
   80% {
     filter: blur(0);
+    opacity: 1;
   }
 
   100% {
     opacity: 1;
+    mask: linear-gradient(90deg, #000 25%, #000000e6 50%, #00000000) 0 / 400%
+      no-repeat;
   }
 }

@@ -2,8 +2,7 @@
 
 import cn from 'clsx'
 import { usePathname } from 'next/navigation'
-import { Link } from '@/app/_components/transition-link'
-import { useBrowserNativeTransitions } from '@/app/_hooks/use-browser-native-transitions'
+import { Link } from 'next-view-transitions'
 
 function Item(props: React.ComponentProps<typeof Link>) {
   const pathname = usePathname()
@@ -18,7 +17,9 @@ function Item(props: React.ComponentProps<typeof Link>) {
   return (
     <li
       className={cn(
-        isActive ? 'text-rurikon-800 cursor-default' : 'text-rurikon-300',
+        isActive
+          ? 'text-rurikon-800 cursor-default'
+          : 'text-rurikon-300 hover:text-rurikon-500',
         'transition-colors'
       )}
     >
@@ -28,11 +29,9 @@ function Item(props: React.ComponentProps<typeof Link>) {
 }
 
 export default function Navbar() {
-  useBrowserNativeTransitions()
-
   return (
     <nav className='mr-10'>
-      <ul className='lowercase text-right'>
+      <ul className='lowercase text-right sticky top-10'>
         <Item href='/'>About</Item>
         <Item href='/thoughts'>Thoughts</Item>
         <Item href='/projects'>Projects</Item>
