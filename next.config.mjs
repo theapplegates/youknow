@@ -1,26 +1,8 @@
 import withMDX from '@next/mdx'
-import remarkGfm from 'remark-gfm'
-import rehypeShiki from '@shikijs/rehype'
 
-export default withMDX({
-  options: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [
-      [
-        rehypeShiki,
-        {
-          themes: 'vitesse-dark',
-          langs: ['javascript', 'typescript', 'css', 'html', 'json', 'bash'],
-        },
-      ],
-    ],
-  },
-})(
+export default withMDX()(
   /** @type {import('next').NextConfig} */ {
     pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
-    experimental: {
-      mdxRs: true,
-    },
     redirects: () => [
       {
         source: '/posts/:slug',
@@ -28,5 +10,15 @@ export default withMDX({
         permanent: false,
       },
     ],
+    experimental: {
+      mdxRs: {
+        mdxType: 'gfm',
+      },
+    },
+    transpilePackages: ['shiki'],
+    images: {
+      contentDispositionType: 'inline',
+      contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    },
   }
 )

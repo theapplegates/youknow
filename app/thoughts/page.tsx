@@ -2,12 +2,16 @@ import { promises as fs } from 'fs'
 import { Link } from 'next-view-transitions'
 import path from 'path'
 
-export default async function Page() {
-  // await new Promise((resolve) => setTimeout(resolve, 1000))
+// In the future we can have a pagination here e.g. /1/*.mdx
+const articlesDirectory = path.join(
+  process.cwd(),
+  'app',
+  'thoughts',
+  '_articles'
+)
 
-  const articles = await fs.readdir(
-    path.join(process.cwd(), 'app', 'thoughts', '_articles')
-  )
+export default async function Page() {
+  const articles = await fs.readdir(articlesDirectory)
 
   const items = []
   for (const article of articles) {
@@ -37,7 +41,7 @@ export default async function Page() {
               <span className='block group-hover:text-rurikon-600'>
                 {item.title}
               </span>
-              <span className='text-sm dot-leaders flex-1 text-rurikon-200 font-normal group-hover:text-rurikon-400 transition-colors leading-none'></span>
+              <span className='text-sm dot-leaders flex-1 text-rurikon-200 font-normal group-hover:text-rurikon-400 transition-colors leading-none' />
               <time className='block text-rurikon-300 tabular-nums font-normal tracking-tighter group-hover:text-rurikon-500 transition-colors'>
                 {item.date}
               </time>

@@ -15,13 +15,19 @@
     "@shikijs/rehype": "^1.2.4",
     "@tailwindcss/postcss": "4.0.0-alpha.13",
     "@types/mdx": "^2.0.12",
+    "bright": "^0.8.5",
     "clsx": "^2.1.0",
-    "next": "14.2.0-canary.60",
+    "katex": "^0.16.11",
+    "next": "15.0.0-canary.66",
     "next-mdx-remote": "^4.4.1",
-    "next-view-transitions": "^0.1.0",
-    "react": "^18",
-    "react-dom": "^18",
-    "remark-gfm": "^4.0.0"
+    "next-view-transitions": "^0.2.0",
+    "react": "19.0.0-rc-df5f2736-20240712",
+    "react-dom": "19.0.0-rc-df5f2736-20240712",
+    "react-katex": "^3.0.1",
+    "remark-gfm": "^4.0.0",
+    "remark-shiki-twoslash": "^3.1.3",
+    "sharp": "^0.33.4",
+    "shiki": "^1.6.0"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -30,5 +36,12 @@
     "postcss": "^8",
     "tailwindcss": "4.0.0-alpha.13",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "supportedArchitectures": {
+      "cpu": [
+        "wasm32"
+      ]
+    }
   }
 }

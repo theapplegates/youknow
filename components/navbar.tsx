@@ -20,21 +20,24 @@ function Item(props: React.ComponentProps<typeof Link>) {
         isActive
           ? 'text-rurikon-800 cursor-default'
           : 'text-rurikon-300 hover:text-rurikon-500',
-        'transition-colors'
+        'transition-colors',
+        '-mx-2'
       )}
     >
-      <Link {...props} />
+      <Link {...props} className='inline-block w-full px-2' />
     </li>
   )
 }
 
 export default function Navbar() {
   return (
-    <nav className='mr-10'>
-      <ul className='lowercase text-right sticky top-10'>
+    <nav className='mr-6 sm:mr-10 md:mr-14'>
+      <ul className='lowercase text-right sticky top-6 sm:top-10 md:top-14'>
         <Item href='/'>About</Item>
         <Item href='/thoughts'>Thoughts</Item>
+        <Item href='/visuals'>Visuals</Item>
         <Item href='/projects'>Projects</Item>
+        <Item href='/guestbook'>Guestbook</Item>
       </ul>
     </nav>
   )

@@ -27,3 +27,18 @@ export async function generateStaticParams() {
       },
     }))
 }
+
+export async function generateMetadata({
+  params,
+}: {
+  params: {
+    slug: string
+  }
+}) {
+  const metadata = (await import('../_articles/' + `${params.slug}.mdx`))
+    .metadata
+  return {
+    title: metadata.title,
+    description: metadata.description,
+  }
+}
