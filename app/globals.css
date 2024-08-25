@@ -163,7 +163,7 @@ pre code {
 code {
   font-family: var(--mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, 'Liberation Mono', 'Courier New', monospace;
-  font-size: 0.92rem;
+  @apply text-[0.805rem] sm:text-[13.8px] md:text-[0.92rem];
   word-spacing: -0.15em;
 
   /* background: var(--color-rurikon-50); */
@@ -247,6 +247,10 @@ article {
   }
 }
 
+.content-fade-out {
+  background: linear-gradient(to bottom, #fcfcfc, #fcfcfc00);
+}
+
 *::selection {
   background: #95a5ac40;
   color: #485a74;
@@ -271,12 +275,12 @@ article {
     }
 
     ::view-transition-old(crossfade) {
-      animation: hide 0.25s cubic-bezier(0.6, 0, 0.8, 1) forwards;
+      animation: hide 0.35s cubic-bezier(0.6, 0, 0.8, 1) forwards;
     }
 
     ::view-transition-new(crossfade) {
       opacity: 0;
-      animation: appear 0.3s ease 0.15s forwards;
+      animation: appear 0.45s ease 0.2s forwards;
     }
   }
 }

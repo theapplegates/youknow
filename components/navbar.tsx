@@ -35,9 +35,9 @@ export default function Navbar() {
       <ul className='lowercase text-right sticky top-6 sm:top-10 md:top-14'>
         <Item href='/'>About</Item>
         <Item href='/thoughts'>Thoughts</Item>
-        <Item href='/visuals'>Visuals</Item>
+        {/* <Item href='/visuals'>Visuals</Item> */}
         <Item href='/projects'>Projects</Item>
-        <Item href='/guestbook'>Guestbook</Item>
+        {/* <Item href='/guestbook'>Guestbook</Item> */}
       </ul>
     </nav>
   )

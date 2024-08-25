@@ -13,9 +13,9 @@ There exists a fascinating category of algorithmic problems known as _offline pr
 
 ## Range Query
 
-Imagine a scenario where you are presented with a series of queries that involve determining the number of unique items within specific ranges. For instance, given a list of numbers `[1, 3, 1, 2, 5]`, you may want to know how many **unique** numbers fall within the ranges `[0, 3]` and `[1, 4]` (with index starting from 0). The answers would be 3 and 4, respectively:
+Imagine a scenario where you are presented with a series of queries that involve determining the number of _unique_ items within specific ranges. For instance, given a list of numbers `[1, 3, 1, 2, 5]`, you may want to know how many unique numbers fall within the ranges `[0..3]` and `[1..4]`. The answers would be `3` and `4`, respectively:
 
-<BlockSideTitle title="Imagine a scenario where you are presented with a series of queries that involve determining the number of unique items within specific ranges.">
+<BlockSideTitle title="Take the first range [0..3] as an example, the items are 1, 3, 1, 2 and the unique numbers are 1, 2, 3.">
 ```js
 1 3 1 2 5
 ^ ^ ^ ^   => 3 unique numbers: 1, 2, 3
@@ -23,10 +23,13 @@ Imagine a scenario where you are presented with a series of queries that involve
 ```
 </BlockSideTitle>
 
-The online version of this problem requires answering the queries one by one after obtaining the list. In the example mentioned, you would first need to respond to the query `[0, 3]` and then `[1, 4]`. On the other hand, the offline version provides all the queries upfront, and you must answer them collectively.
+The _online_ version of this problem requires answering the queries one by one after obtaining the list. In the example mentioned, you would first need to respond to the query `[0..3]` and then `[1..4]`. In contrast, the _offline_ version provides all the queries upfront, and you must answer them collectively.
 
-Let's begin with the online version. The naive solution involves iterating through the list and counting the number of unique items within each range. This approach has a time complexity of <InlineMath math='\mathcal{O}(nm)' />, where <InlineMath math='n'/> is the length of the list and <InlineMath math='m'/> is the number of queries. This is because for each query, you need to iterate through the list to count the number of unique items within the specified range:
+Let's begin with the _online_ version. The naive solution involves iterating through the list and counting the number of unique items within each range. This approach has a time complexity of <InlineMath math='O(nm)' />, where <InlineMath math='n'/> is the length of the list and <InlineMath math='m'/> is the number of queries. This is because for each query, you need to iterate through the list to count the number of unique items within the specified range:
 
+<BlockSideTitle title={<>
+  Let’s assume that list access is always <InlineMath math='O(1)' /> for simplicity. This algorithm is fairly straightforward: for each query, we iterate through the list and count the number of unique items within the range.
+</>}>
 ```js
 function countUniqueItems(list, range) {
   const [start, end] = range;
@@ -50,12 +53,13 @@ for (let i = 0; i < numberOfQueries; i++) {
   console.log(count);
 }
 ```
+</BlockSideTitle>
 
 While there are various ways to optimize this solution, let's explore the intriguing aspects of the offline version.
 
 ## “Offline”
 
-In the offline version, we receive the list and all the queries simultaneously. To begin, let's take a step to **sort the queries** based on their left boundary:
+In the offline version, we receive the list and all the queries simultaneously. To begin, let’s take a step to _sort_ the queries based on their left boundaries:
 
 ```js
 const list = inputList();

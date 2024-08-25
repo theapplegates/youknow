@@ -54,7 +54,9 @@ export const components: Record<string, FC<any>> = {
   strong: (props) => <strong className='font-bold' {...props} />,
   p: (props) => <p className='mt-7' {...props} />,
   blockquote: (props) => <blockquote {...props} />,
-  pre: (props) => <pre className='mt-7 whitespace-pre-wrap' {...props} />,
+  pre: (props) => (
+    <pre className='mt-7 whitespace-pre md:whitespace-pre-wrap' {...props} />
+  ),
   code: async (props) => {
     if (typeof props.children === 'string') {
       const code = await codeToHtml(props.children, {
@@ -105,6 +107,7 @@ export const components: Record<string, FC<any>> = {
           alt={alt}
           quality={95}
           placeholder='blur'
+          draggable={false}
         />
       )
     } else {
@@ -116,6 +119,7 @@ export const components: Record<string, FC<any>> = {
           alt={alt}
           quality={95}
           placeholder='blur'
+          draggable={false}
         />
       )
     }
