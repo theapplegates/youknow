@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@heroicons/react':
+    specifier: ^2.1.5
+    version: 2.1.5(react@19.0.0-rc-df5f2736-20240712)
   '@mdx-js/loader':
     specifier: ^3.0.1
     version: 3.0.1(webpack@5.91.0)
@@ -96,6 +99,14 @@ packages:
       tslib: 2.6.3
     dev: false
     optional: true
+
+  /@heroicons/react@2.1.5(react@19.0.0-rc-df5f2736-20240712):
+    resolution: {integrity: sha512-FuzFN+BsHa+7OxbvAERtgBTNeZpUjgM/MIizfVkSCL2/edriN0Hx/DWRCR//aPYwO5QX/YlgLGXk+E3PcfZwjA==}
+    peerDependencies:
+      react: '>= 16'
+    dependencies:
+      react: 19.0.0-rc-df5f2736-20240712
+    dev: false
 
   /@img/sharp-darwin-arm64@0.33.4:
     resolution: {integrity: sha512-p0suNqXufJs9t3RqLBO6vvrgr5OhgbWp76s5gTRvdmxmuv9E1rcaqGUsl3l4mKVmXPkTkTErXediAui4x+8PSA==}

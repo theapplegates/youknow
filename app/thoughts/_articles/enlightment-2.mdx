@@ -1,0 +1,21 @@
+export const metadata = {
+  title: 'Enlightment, Again',
+  date: '2024.09.29'
+}
+
+# Enlightment, Again
+
+> The reality we can put into words is never reality itself.
+
+In quantum mechanics, the [Uncertainty Principle](https://en.wikipedia.org/wiki/Uncertainty_principle) states that we cannot simultaneously know both the position and momentum of a particle with perfect accuracy.
+
+Mathematically, it is expressed as <InlineMath math="\Delta x \cdot \Delta p \geq \hbar/2" /> where <InlineMath math="\Delta x" /> is the uncertainty in position, <InlineMath math="\Delta p" /> is the uncertainty in momentum, and <InlineMath math="\hbar" /> is just a relatively small constant (the reduced Planck constant).
+
+This principle finds a surprising analog in software development. When measuring the performance of a system, you can never measure the precise position of an operation and its performance at the same time.
+
+This is because measuring time, i.e. `performance.now()`, is a side effect of the operation itself. The act of measuring time changes the performance of the operation. The more accurate the measurement, the more it affects the operation. If you put the measurement on the very top level, you will measure the performance of the whole system, not the operation itself.
+
+This is also called the Probe Effect. The act of measuring changes the thing being measured. Or Heisenbug.
+
+> We can never know anything.
+> — Werner Heisenberg
