@@ -1,24 +1,14 @@
 import type { MDXComponents } from 'mdx/types'
 import type { FC } from 'react'
+import { codeToHtml } from 'shiki'
 import Link from 'next/link'
-import {
-  codeToHtml,
-  // createCssVariablesTheme
-} from 'shiki'
 import Image from 'next/image'
-
-import { Card } from '@/components/tweet-card'
-import { BlockSideTitle } from '@/components/block-sidetitle'
 
 // @ts-ignore
 import { InlineMath, BlockMath } from 'react-katex'
 
-// const cssVariablesTheme = createCssVariablesTheme({
-//   name: 'css-variables',
-//   variablePrefix: '--shiki-',
-//   variableDefaults: {},
-//   fontStyle: true,
-// })
+import { Card } from '@/components/tweet-card'
+import { BlockSideTitle } from '@/components/block-sidetitle'
 
 export const components: Record<string, FC<any>> = {
   h1: (props) => (
@@ -53,7 +43,12 @@ export const components: Record<string, FC<any>> = {
   },
   strong: (props) => <strong className='font-bold' {...props} />,
   p: (props) => <p className='mt-7' {...props} />,
-  blockquote: (props) => <blockquote {...props} />,
+  blockquote: (props) => (
+    <blockquote
+      className='pl-6 -ml-6 sm:pl-10 sm:-ml-10 md:pl-14 md:-ml-14'
+      {...props}
+    />
+  ),
   pre: (props) => (
     <pre className='mt-7 whitespace-pre md:whitespace-pre-wrap' {...props} />
   ),
@@ -86,7 +81,7 @@ export const components: Record<string, FC<any>> = {
 
       return (
         <code
-          className={'inline shiki css-variables'}
+          className='inline shiki css-variables text-[0.805rem] sm:text-[13.8px] md:text-[0.92rem]'
           dangerouslySetInnerHTML={{ __html: code }}
         />
       )
@@ -130,7 +125,7 @@ export const components: Record<string, FC<any>> = {
 
     return img
   },
-  hr: (props) => <hr className='mt-7 w-24 border-rurikon-border' {...props} />,
+  hr: (props) => <hr className='my-14 w-24 border-rurikon-border' {...props} />,
   BlockSideTitle,
   InlineMath,
   BlockMath,

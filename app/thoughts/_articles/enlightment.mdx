@@ -28,7 +28,7 @@ The _online_ version of this problem requires answering the queries one by one a
 Let's begin with the _online_ version. The naive solution involves iterating through the list and counting the number of unique items within each range. This approach has a time complexity of <InlineMath math='O(nm)' />, where <InlineMath math='n'/> is the length of the list and <InlineMath math='m'/> is the number of queries. This is because for each query, you need to iterate through the list to count the number of unique items within the specified range:
 
 <BlockSideTitle title={<>
-  Let’s assume that list access is always <InlineMath math='O(1)' /> for simplicity. This algorithm is fairly straightforward: for each query, we iterate through the list and count the number of unique items within the range.
+  Let’s assume that list access is always <InlineMath math='O(1)' /> for simplicity. This algorithm is fairly straightforward: For each query, we iterate through the list and count the number of unique items within the range.
 </>}>
 ```js
 function countUniqueItems(list, range) {

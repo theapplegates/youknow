@@ -14,8 +14,8 @@ export function BlockSideTitle({
       </span>
       <span
         className={cn(
-          'sidenote block relative mt-3.5 mb-7 mx-auto text-left sm:text-center text-pretty w-[80%] text-xs sm:text-sm leading-5 sm:leading-6 text-rurikon-400',
-          'text:inline text:float-right text:clear-right text:w-[50%] text:-mr-[50%] text:mt-0 text:pl-7 text:text-left'
+          'sidenote block relative mt-3.5 mb-7 mx-auto text-left text-pretty w-[80%] text-xs sm:text-sm leading-5 sm:leading-6 text-rurikon-400',
+          'text:inline text:float-right text:clear-right text:w-[50%] text:-mr-[50%] text:mt-0 text:pl-7'
         )}
       >
         <span className='sr-only'>Sidenote: </span>

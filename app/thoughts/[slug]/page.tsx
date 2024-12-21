@@ -1,13 +1,12 @@
 import { promises as fs } from 'fs'
 import path from 'path'
 
-export default async function Page({
-  params,
-}: {
-  params: {
+export default async function Page(props: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }) {
+  const params = await props.params
   const MDXContent = (await import('../_articles/' + `${params.slug}.mdx`))
     .default
 
@@ -28,13 +27,12 @@ export async function generateStaticParams() {
     }))
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: {
+export async function generateMetadata(props: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }) {
+  const params = await props.params
   const metadata = (await import('../_articles/' + `${params.slug}.mdx`))
     .metadata
   return {

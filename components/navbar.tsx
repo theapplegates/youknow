@@ -18,13 +18,13 @@ function Item(props: React.ComponentProps<typeof Link>) {
     <li
       className={cn(
         isActive
-          ? 'text-rurikon-800 cursor-default'
+          ? 'text-rurikon-800'
           : 'text-rurikon-300 hover:text-rurikon-500',
         'transition-colors',
         '-mx-2'
       )}
     >
-      <Link {...props} className='inline-block w-full px-2' />
+      <Link {...props} className='inline-block w-full px-2' draggable={false} />
     </li>
   )
 }

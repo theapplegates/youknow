@@ -1,11 +1,8 @@
 import {
   ArrowsRightLeftIcon,
   Bars3BottomLeftIcon,
-  CloudIcon,
   CodeBracketSquareIcon,
-  CpuChipIcon,
   GlobeAsiaAustraliaIcon,
-  HashtagIcon,
   SparklesIcon,
 } from '@heroicons/react/16/solid'
 
@@ -16,6 +13,7 @@ export function Nextjs({ height = 24 }) {
       viewBox='0 0 394 79'
       height={height}
       xlinkTitle='Next.js'
+      className='inline'
     >
       <path d='M262 0h68.5v12.7h-27.2v66.6h-13.6V12.7H262V0zM149 0v12.7H94v20.4h44.3v12.6H94v21h55v12.6H80.5V0h68.7zm34.3 0h-17.8l63.8 79.4h17.9l-32-39.7 32-39.6h-17.9l-23 28.6-23-28.6zm18.3 56.7l-9-11-27.1 33.7h17.8l18.3-22.7z'></path>
       <path
@@ -35,6 +33,7 @@ export function V0({ height = 24 }) {
       viewBox='0 0 40 20'
       height={height}
       xlinkTitle='Vercel v0'
+      className='inline'
     >
       <path d='M23.4 0h9.5a7 7 0 017 7v9H36V6.8l-9.5 9.4H36v3.7h-9.4a7 7 0 01-7.1-7V3.7h3.9v9.6l9.8-9.6h-9.8V0zm-9.6 19.1L0 3.7h5.5l8.1 9v-9h4.2v13.9c0 2-2.6 3-4 1.5z'></path>
     </svg>
@@ -48,6 +47,7 @@ export function Nextra({ height = 24 }) {
       viewBox='25 30 370 70'
       height={height}
       xlinkTitle='Nextra'
+      className='inline'
     >
       <path
         fill='#000'
@@ -71,6 +71,7 @@ export function SWR({ height = 24 }) {
       viewBox='0 0 275 65'
       height={height}
       xlinkTitle='SWR'
+      className='inline'
     >
       <path
         fill='#000'
@@ -84,15 +85,15 @@ function LogoWithIcon({
   icon,
   title,
 }: {
-  icon: React.ReactNode
+  icon?: React.ReactNode
   title: string
 }) {
   return (
     <span
-      className='inline-flex items-center gap-1 whitespace-nowrap select-none text-black overflow-hidden'
+      className='inline-flex items-center gap-1 whitespace-nowrap select-none text-black overflow-hidden align-sub'
       title={title}
     >
-      <span className='shrink-0 min-w-0'>{icon}</span>
+      {icon ? <span className='shrink-0 min-w-0'>{icon}</span> : null}
       <span
         className='text-[16px] font-bold tracking-[-0.005em] leading-none mt-px'
         style={{
@@ -145,10 +146,6 @@ export function Satori({ height = 24 }) {
   )
 }
 
-export function Mak({ height = 24 }) {
-  return <LogoWithIcon icon={<HashtagIcon height={height} />} title='mak.ink' />
-}
-
 export function NextViewTransitions({ height = 24 }) {
   return (
     <LogoWithIcon
@@ -158,15 +155,6 @@ export function NextViewTransitions({ height = 24 }) {
   )
 }
 
-export function Y86Simulator({ height = 24 }) {
-  return (
-    <LogoWithIcon
-      icon={<CpuChipIcon height={height} />}
-      title='Y86 CPU Simulator'
-    />
-  )
-}
-
-export function Metaballs({ height = 24 }) {
-  return <LogoWithIcon icon={<CloudIcon height={height} />} title='Metaballs' />
+export function Plaintext({ title = '' }) {
+  return <LogoWithIcon title={title} />
 }

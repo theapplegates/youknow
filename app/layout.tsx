@@ -49,7 +49,7 @@ export default function RootLayout({
             sans.variable,
             serif.variable,
             mono.variable,
-            'container p-6 sm:p-10 md:p-14 mx-auto',
+            'container p-6 sm:p-10 md:p-14',
             'text-sm leading-6 sm:text-[15px] sm:leading-7 md:text-base md:leading-7',
             'text-rurikon-500',
             'antialiased'
