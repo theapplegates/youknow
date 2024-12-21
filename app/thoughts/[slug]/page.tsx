@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs'
 import path from 'path'
+import cn from 'clsx'
 
 export default async function Page(props: {
   params: Promise<{
@@ -7,10 +8,18 @@ export default async function Page(props: {
   }>
 }) {
   const params = await props.params
-  const MDXContent = (await import('../_articles/' + `${params.slug}.mdx`))
-    .default
+  const { default: MDXContent, metadata } = await import(
+    '../_articles/' + `${params.slug}.mdx`
+  )
 
-  return <MDXContent />
+  return (
+    <div
+      className={cn(metadata.chinese && 'text-justify font-zh')}
+      lang={metadata.chinese ? 'zh-Hans' : 'en'}
+    >
+      <MDXContent />
+    </div>
+  )
 }
 
 export async function generateStaticParams() {

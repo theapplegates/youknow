@@ -43,7 +43,10 @@ export default function RootLayout({
 }>) {
   return (
     <ViewTransitions>
-      <html lang='en'>
+      {/* It's critical to disable X direction overscroll as in many browsers
+          it's used as the back/forward navigation gesture which shifts the
+          whole content and creates a bad experience with view transitions. */}
+      <html lang='en' className='overflow-x-hidden touch-manipulation'>
         <body
           className={cn(
             sans.variable,

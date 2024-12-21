@@ -23,6 +23,12 @@ export const components: Record<string, FC<any>> = {
       {...props}
     />
   ),
+  h3: (props) => (
+    <h3
+      className='font-semibold mt-14 mb-7 text-rurikon-600 text-balance'
+      {...props}
+    />
+  ),
   ul: (props) => (
     <ul
       className='mt-7 list-disc list-inside marker:text-rurikon-100 marker:mr-2'
