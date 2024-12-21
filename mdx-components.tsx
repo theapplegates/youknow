@@ -23,12 +23,23 @@ export const components: Record<string, FC<any>> = {
       {...props}
     />
   ),
+  ul: (props) => (
+    <ul
+      className='mt-7 list-disc list-inside marker:text-rurikon-100 marker:mr-2'
+      {...props}
+    />
+  ),
+  li: (props) => <li className='ml-0.5' {...props} />,
   a: ({ href, ...props }) => {
     return href?.startsWith('/') ? (
-      <Link href={href} {...props} />
+      <Link
+        className='break-words decoration-from-font underline underline-offset-2 decoration-rurikon-300 hover:decoration-rurikon-600 focus:outline-none focus-visible:rounded-xs focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-opacity-50 focus-visible:ring-offset-2'
+        href={href}
+        {...props}
+      />
     ) : (
       <a
-        className='break-words decoration-from-font underline underline-offset-2 decoration-rurikon-300 hover:decoration-rurikon-600 focus:outline-none focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-opacity-50 focus-visible:ring-offset-2'
+        className='break-words decoration-from-font underline underline-offset-2 decoration-rurikon-300 hover:decoration-rurikon-600 focus:outline-none focus-visible:rounded-xs focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-opacity-50 focus-visible:ring-offset-2'
         href={href}
         draggable={false}
         {...(href?.startsWith('#')

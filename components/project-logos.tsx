@@ -90,18 +90,17 @@ function LogoWithIcon({
 }) {
   return (
     <span
-      className='inline-flex items-center gap-1 whitespace-nowrap select-none text-black overflow-hidden align-sub'
+      className='inline-flex items-center gap-1 whitespace-nowrap select-none text-black overflow-visible align-baseline'
       title={title}
     >
       {icon ? <span className='shrink-0 min-w-0'>{icon}</span> : null}
       <span
         className='text-[16px] font-bold tracking-[-0.005em] leading-none mt-px'
         style={{
-          // Use smaller opsz to make the logo more readable. Also make it more stylized by turning on
-          // flags like cv11.
-          fontVariationSettings: '"wght" 700, "opsz" 14',
+          // Use smaller opsz to make the logo more readable.
+          fontVariationSettings: '"wght" 550, "opsz" 20',
           fontFeatureSettings:
-            '"dlig" 1, "cv01", "cv03", "cv04", "cv05", "cv08", "cv09", "cv11", "calt", "ss03", "cpsp", "liga", "ordn"',
+            '"dlig" 1, "cv01", "cv03", "cv04", "cv05", "cv09", "calt", "ss03", "cpsp", "liga", "ordn"',
         }}
       >
         {title}

@@ -86,8 +86,8 @@
 
 :root {
   --sans-variation: 'opsz' 32;
-  --font-features: 'cpsp' 1, 'dlig' 1, 'cv01', 'cv03', 'cv04', 'cv09', 'calt',
-    'ss03', 'liga', 'ordn';
+  --font-features: 'cpsp' 1, 'cv01', 'cv03', 'cv04', 'cv09', 'calt', 'ss03',
+    'liga', 'ordn';
 }
 
 body {
