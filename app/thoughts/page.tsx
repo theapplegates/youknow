@@ -2,6 +2,10 @@ import { promises as fs } from 'fs'
 import { Link } from 'next-view-transitions'
 import path from 'path'
 
+export const metadata = {
+  title: 'Thoughts',
+}
+
 // In the future we can have a pagination here e.g. /1/*.mdx
 const articlesDirectory = path.join(
   process.cwd(),

@@ -27,7 +27,10 @@ const mono = localFont({
 })
 
 export const metadata: Metadata = {
-  title: 'Shu Ding',
+  title: {
+    template: '%s - Shu Ding',
+    default: 'Shu Ding',
+  },
 }
 
 export const viewport: Viewport = {

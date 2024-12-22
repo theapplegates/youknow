@@ -105,7 +105,7 @@ body {
   font-optical-sizing: auto;
   letter-spacing: 0.0085em;
   word-spacing: -0.04em;
-  background-color: #fcfcfc;
+  background-color: var(--background);
   text-rendering: geometricPrecision;
 
   /* Debugger */
@@ -277,12 +277,12 @@ article {
     }
 
     ::view-transition-old(crossfade) {
-      animation: hide 0.25s cubic-bezier(0.6, 0, 0.8, 1) forwards;
+      animation: hide 0.4s cubic-bezier(0.6, 0, 0.8, 1) forwards;
     }
 
     ::view-transition-new(crossfade) {
       opacity: 0;
-      animation: appear 0.5s cubic-bezier(0, 0.55, 0.45, 1) 0.15s forwards;
+      animation: appear .6s ease 0.2s forwards;
     }
   }
 }
