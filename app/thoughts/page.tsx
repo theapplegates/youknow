@@ -41,12 +41,13 @@ export default async function Page() {
             <Link
               href={`/thoughts/${item.slug}`}
               className='group flex gap-1 justify-between items-center'
+              draggable={false}
             >
-              <span className='block group-hover:text-rurikon-600'>
+              <span className='block text-rurikon-500 group-hover:text-rurikon-700'>
                 {item.title}
               </span>
-              <span className='text-sm dot-leaders flex-1 text-rurikon-200 font-normal group-hover:text-rurikon-400 transition-colors leading-none' />
-              <time className='block text-rurikon-300 tabular-nums font-normal tracking-tighter group-hover:text-rurikon-500 transition-colors'>
+              <span className='text-sm dot-leaders flex-1 text-rurikon-100 font-normal group-hover:text-rurikon-500 transition-colors group-hover:transition-none leading-none' />
+              <time className='block text-rurikon-200 tabular-nums font-normal tracking-tighter group-hover:text-rurikon-500 transition-colors group-hover:transition-none self-start'>
                 {item.date}
               </time>
             </Link>

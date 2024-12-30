@@ -19,8 +19,8 @@ function Item(props: React.ComponentProps<typeof Link>) {
       className={cn(
         isActive
           ? 'text-rurikon-800'
-          : 'text-rurikon-300 hover:text-rurikon-500',
-        'transition-colors',
+          : 'text-rurikon-300 hover:text-rurikon-600',
+        'transition-colors hover:transform-none',
         '-mx-2'
       )}
     >
@@ -31,12 +31,12 @@ function Item(props: React.ComponentProps<typeof Link>) {
 
 export default function Navbar() {
   return (
-    <nav className='mr-6 sm:mr-10 md:mr-14'>
+    <nav className='mr-6 sm:mr-10 md:mr-14 w-16'>
       <ul className='lowercase text-right sticky top-6 sm:top-10 md:top-14'>
         <Item href='/'>About</Item>
         <Item href='/thoughts'>Thoughts</Item>
         {/* <Item href='/visuals'>Visuals</Item> */}
-        <Item href='/works'>Works</Item>
+        <Item href='/projects'>Projects</Item>
         {/* <Item href='/guestbook'>Guestbook</Item> */}
       </ul>
     </nav>

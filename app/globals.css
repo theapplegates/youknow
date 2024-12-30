@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@source "../mdx-components.tsx";
 
 @layer utilities {
   .font-thin {
@@ -18,11 +19,11 @@
   }
   .font-semibold {
     font-variation-settings: 'wght' 600, var(--sans-variation);
-    font-weight: unset;
+    /* font-weight: unset; */
   }
   .font-bold {
     font-variation-settings: 'wght' 640, var(--sans-variation);
-    font-weight: unset;
+    /* font-weight: unset; */
   }
   .font-extrabold {
     font-variation-settings: 'wght' 700, var(--sans-variation);
@@ -89,7 +90,7 @@
 
 :root {
   --sans-variation: 'opsz' 32;
-  --font-features: 'cpsp' 1, 'cv01', 'cv03', 'cv04', 'cv09', 'calt', 'ss03',
+  --font-features: 'cpsp' 1, 'cv01', 'cv03', 'cv04', 'calt', 'ss03',
     'liga', 'ordn';
 }
 
@@ -177,25 +178,19 @@ code {
 
   /* color: hsl(215deg 32% 37%); */
   --shiki-token-comment: hsl(215deg 32% 37% / 50%);
-  --shiki-token-punctuation: hsl(215deg 32% 37% / 70%);
-  --shiki-token-keyword: hsl(215deg 32% 37% / 70%);
+  --shiki-token-punctuation: hsl(215deg 32% 37% / 65%);
+  --shiki-token-keyword: hsl(215deg 32% 37% / 65%);
   --shiki-token-function: hsl(215deg 32% 37%);
-  --shiki-token-string: #22863a;
-  --shiki-token-string-expression: #22863a;
+  --shiki-token-string: #0fb359;
+  --shiki-token-string-expression: #0fb359;
+  --shiki-token-constant: hsl(223, 94%, 48%);
+  --shiki-token-link: #0fb359;
+  --shiki-token-parameter: #ff9800;
 }
 
 pre {
   --shiki-foreground: #414141;
   --shiki-background: transparent;
-  --shiki-token-constant: #1976d2;
-  --shiki-token-string: #22863a;
-  --shiki-token-comment: #aaa;
-  --shiki-token-keyword: #d32f2f;
-  --shiki-token-parameter: #ff9800;
-  --shiki-token-function: #6f42c1;
-  --shiki-token-string-expression: #22863a;
-  --shiki-token-punctuation: #212121;
-  --shiki-token-link: #22863a;
 }
 
 code span {
@@ -214,17 +209,10 @@ article {
       margin: 0;
     }
   }
-  .framed figure {
+  .framed > img, .framed > figure {
+    padding: var(--frame-padding, 0.875rem);
+    background: var(--frame-background, #fff);
     border: 1px solid var(--color-rurikon-border);
-    background-color: #fff;
-    img {
-      padding: 0.875rem;
-    }
-  }
-  .expand figure {
-    img {
-      padding: 0.875rem;
-    }
   }
   iframe {
     width: 100%;

@@ -10,19 +10,17 @@ _This blog post was originally published as a [Tweet thread](https://twitter.com
 
 <Card title="COBE" desc="5kB WebGL globe lib." link="https://github.com/shuding/cobe" image="https://repository-images.githubusercontent.com/429536908/62a4e686-8613-4b45-b7bb-fa35b558ae8e" />
 
-I made http://github.com/shuding/cobe a while ago: a 5kB globe lib, and it improved our page performance[^1] by almost 60%. How was it created?
+I made [github.com/shuding/cobe](https://github.com/shuding/cobe) a while ago: a 5kB globe lib, and it improved our page performance by [almost 60%](https://twitter.com/shuding_/status/1467087244464959490). How was it created?
 
-[^1]: Performance improvement: https://twitter.com/shuding_/status/1467087244464959490
-
-First of all, today's popular WebGL libs are usually sized at hundreds of kilobytes, but there are also lightweight choices such as http://github.com/vaneenige/phenomenon and http://github.com/xem/W. All of them are wrappers on top of the WebGL standard APIs, but with different feature sets.
+First of all, today's popular WebGL libs are usually sized at hundreds of kilobytes, but there are also lightweight choices such as [github.com/vaneenige/phenomenon](https://github.com/vaneenige/phenomenon) and [github.com/xem/W](https://github.com/xem/W). All of them are wrappers on top of the WebGL standard APIs, but with different feature sets.
 
 Earlier this year we were using a Three.js based solution. The globe is a SphereGeometry that loads the full world map JPEG as texture. Every visitor will spend ~40kB loading that image, and it still felt blurry so we couldn't optimize it further.
 
-![](cobe-old.jpeg)
+<div className="framed" style={{ '--frame-padding': 0 }}>![](cobe-old.jpeg)</div>
 
-We tried to set a higher texture anisotropy (http://threejs.org/docs/#api/en/textures/Texture.anisotropy) which improved it a bit, but that's still a trade-off between performance and quality.
+We tried to set a higher texture anisotropy ([threejs.org/docs/#api/en/textures/Texture.anisotropy](https://threejs.org/docs/#api/en/textures/Texture.anisotropy)) which improved it a bit, but that's still a trade-off between performance and quality.
 
-Some day I read this great post by GitHub: [How we built the GitHub globe](https://github.blog/2020-12-21-how-we-built-the-github-globe/). They're not rendering an image, but thousands of dots, on the globe. So a lot of information loss (size win!): no more sharp edges and rich detail, but still looking amazing.
+Some day I read this great post by GitHub: [How we built the GitHub globe](https://github.blog/2020-12-21-how-we-built-the-github-globe). They're not rendering an image, but thousands of dots, on the globe. So a lot of information loss (size win!): no more sharp edges and rich detail, but still looking amazing.
 
 <Card title="How we built the GitHub globe | The GitHub Blog" desc="GitHub is where the world builds software. More than 56 million developers around the world build and work together on GitHub. With our new homepage, we wanted to show how open source development transcends the borders we&rsquo;re living in and to tell our product story through the lens of a developer&rsquo;s journey. Now that it&rsquo;s [&hellip;]" link="https://github.blog/2020-12-21-how-we-built-the-github-globe/" image="https://github.blog/wp-content/uploads/2020/12/102393310-07478b80-3f8d-11eb-84eb-392d555ebd29.png?fit=1200%2C630" />
 
@@ -30,7 +28,7 @@ But one bottleneck in that GitHub approach is, they have to reduce the number of
 
 To start with that idea, let's create a shader to draw a sphere, and a 4096×2048 world map as the texture (80kB):
 
-![](cobe-shader-1.png)
+<div className="framed" style={{ '--frame-padding': 0 }}>![](cobe-shader-1.png)</div>
 
 ```js
 color = isOnLand(x, y) ? light : dark
@@ -38,7 +36,7 @@ color = isOnLand(x, y) ? light : dark
 
 Then we can render some kind of lattice on the globe, like this a basic one:
 
-![](cobe-shader-2.png)
+<div className="framed" style={{ '--frame-padding': 0 }}>![](cobe-shader-2.png)</div>
 
 ```js
 color = isOnDot(x, y) ? light : dark
@@ -46,7 +44,7 @@ color = isOnDot(x, y) ? light : dark
 
 By multiplying them, you get a dotted world map:
 
-![](cobe-shader-3.png)
+<div className="framed" style={{ '--frame-padding': 0 }}>![](cobe-shader-3.png)</div>
 
 ```js
 color = isOnLand(x, y) && isOnDot(x, y) ? light : dark
@@ -70,7 +68,7 @@ There's also an excellent animation by [@cristobalvila](https://twitter.com/cris
 
 But one blocker was, to use a shader we have to compute the nearest point in the Fibonacci lattice from the current coordinates. Whereas most implementations today are producing these points kinda "unpredictably", which makes it difficult to render on a GPU.
 
-Then I saw http://shadertoy.com/view/lllXz4 created by [@iquilezles](https://twitter.com/iquilezles), which implemented an algorithm to map a point on a sphere to its closest Spherical Fibonacci point! Here's the paper if you are interested: http://dokumen.tips/documents/spherical-fibonacci-mapping-fibonacci-mapping-benjamin-keinert-1matthias-innmann.html.
+Then I saw [shadertoy.com/view/lllXz4](https://shadertoy.com/view/lllXz4) created by [@iquilezles](https://twitter.com/iquilezles), which implemented an algorithm to map a point on a sphere to its closest Spherical Fibonacci point! Here's the paper if you are interested: [Spherical Fibonacci Mapping](https://dokumen.tips/documents/spherical-fibonacci-mapping-fibonacci-mapping-benjamin-keinert-1matthias-innmann.html).
 
 So now we finally got everything ready. The sampling looks good with the new algorithm:
 
@@ -80,16 +78,16 @@ So now we finally got everything ready. The sampling looks good with the new alg
 ![](cobe-shader-5.png)
 </div>
 
-We also got rid of the precision error by rounding before sin/cos as well as [@farteryhr](https://twitter.com/farteryhr)'s amazing mantissa trick, if you want to know more about that part:
+We also got rid of the precision error by rounding before sin/cos as well as [@farteryhr](https://twitter.com/farteryhr)’s amazing mantissa trick, if you want to know more about that part:
 
 - https://twitter.com/shuding_/status/1470068674560155650
-- http://github.com/shuding/cobe/pull/8
-- http://github.com/shuding/cobe/pull/9
+- https://github.com/shuding/cobe/pull/8
+- https://github.com/shuding/cobe/pull/9
 
-Finally, we can add some phong lighting and glow effect to make it look good. And the last step is to use [@evanwallace](https://twitter.com/evanwallace)'s http://evanw.github.io/glslx to compress the shader for distribution.
+Finally, we can add some phong lighting and glow effect to make it look good. And the last step is to use [@evanwallace](https://twitter.com/evanwallace)’s [glslx](https://evanw.github.io/glslx) to compress the shader for distribution.
 
-![](cobe-shader-6.jpeg)
+<div className="framed" style={{ '--frame-padding': 0 }}>![](cobe-shader-6.jpeg)</div>
 
-This library now powers http://vercel.com and http://vercel.com/edge :)
+This library now powers [vercel.com](https://vercel.com) and [vercel.com/edge](https://vercel.com/edge) :)
 
 <Card title="Develop. Preview. Ship. For the best frontend teams – Vercel" link="https://vercel.com" desc="Deploy web projects with the best frontend developer experience and highest end-user performance." image="https://assets.vercel.com/image/upload/front/vercel/dps.png" />

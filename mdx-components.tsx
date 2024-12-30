@@ -1,6 +1,6 @@
 import type { MDXComponents } from 'mdx/types'
 import type { FC } from 'react'
-import { codeToHtml } from 'shiki'
+import { codeToHtml, createCssVariablesTheme } from 'shiki'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -9,6 +9,8 @@ import { InlineMath, BlockMath } from 'react-katex'
 
 import { Card } from '@/components/tweet-card'
 import { BlockSideTitle } from '@/components/block-sidetitle'
+
+const cssVariablesTheme = createCssVariablesTheme({})
 
 export const components: Record<string, FC<any>> = {
   h1: (props) => (
@@ -31,29 +33,29 @@ export const components: Record<string, FC<any>> = {
   ),
   ul: (props) => (
     <ul
-      className='mt-7 list-disc list-inside marker:text-rurikon-100 marker:mr-2'
+      className='mt-7 list-disc list-outside marker:text-rurikon-200 pl-5'
       {...props}
     />
   ),
-  li: (props) => <li className='ml-0.5' {...props} />,
+  ol: (props) => (
+    <ol
+      className='mt-7 list-decimal list-outside marker:text-rurikon-200 pl-5'
+      {...props}
+    />
+  ),
+  li: (props) => <li className='pl-1.5' {...props} />,
   a: ({ href, ...props }) => {
-    return href?.startsWith('/') ? (
+    return (
       <Link
         className='break-words decoration-from-font underline underline-offset-2 decoration-rurikon-300 hover:decoration-rurikon-600 focus:outline-none focus-visible:rounded-xs focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-opacity-50 focus-visible:ring-offset-2'
         href={href}
-        {...props}
-      />
-    ) : (
-      <a
-        className='break-words decoration-from-font underline underline-offset-2 decoration-rurikon-300 hover:decoration-rurikon-600 focus:outline-none focus-visible:rounded-xs focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-opacity-50 focus-visible:ring-offset-2'
-        href={href}
         draggable={false}
-        {...(href?.startsWith('#')
-          ? {}
-          : {
+        {...(href?.startsWith('https://')
+          ? {
               target: '_blank',
               rel: 'noopener noreferrer',
-            })}
+            }
+          : {})}
         {...props}
       />
     )
@@ -73,9 +75,9 @@ export const components: Record<string, FC<any>> = {
     if (typeof props.children === 'string') {
       const code = await codeToHtml(props.children, {
         lang: 'jsx',
-        // theme: cssVariablesTheme,
+        theme: cssVariablesTheme,
         // theme: 'min-light',
-        theme: 'snazzy-light',
+        // theme: 'snazzy-light',
         transformers: [
           {
             // Since we're using dangerouslySetInnerHTML, the code and pre
@@ -111,7 +113,7 @@ export const components: Record<string, FC<any>> = {
   img: async ({ src, alt, title }) => {
     let img: React.ReactNode
 
-    if (src.startsWith('http')) {
+    if (src.startsWith('https://')) {
       img = (
         <Image
           className='mt-7'

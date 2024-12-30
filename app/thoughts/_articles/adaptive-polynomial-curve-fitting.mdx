@@ -12,22 +12,19 @@ This article is also published on Vercel’s Engineering Blog: [_Curve fitting f
 
 ## Summary
 
-Last month I worked on a side project internally during Vercel’s _Design Your Friday_ [^first], to improve the data visualization of our Analytics[^2] charts. Previously, all the data points were visualized by simply connecting them as a line:
+Last month I worked on a side project internally at Vercel, to improve the data visualization of our [Analytics Charts](https://vercel.com/analytics). Previously, all the data points were visualized by simply connecting them as a line:
 
-[^first]: Do whatever you want on every month’s first Friday.
-[^2]: [Vercel Analytics](https://vercel.com/analytics) collects [web vitals](https://web.dev/vitals) data automatically from your site visitors and shows insights on your dashboard.
+<div className="framed">![Old analytics chart](analytics-old.png "Our old analytics visualization.")</div>
 
-<div className="framed">![Old analytics chart](analytics-old.png "The old analytics chart.")</div>
+It’s hard to read the **trend** from that chart because it’s too noisy. And the delta showed a -0.15s decrease, which clearly felt wrong. With the improvement introduced, it now uses a smooth curve to visualize the trend and measures the delta more accurately:
 
-It’s hard to read the **trend** from that chart because it’s too noisy. And the delta showed a “-0.15” decrease, which felt wrong. With the improvement I made, it now uses a smooth curve to visualize the trend and measures the delta more accurately:
+<div className="framed">![New analytics chart](analytics-new.png "Improved chart with the same data.")</div>
 
-<div className="framed">![New analytics chart](analytics-new.png "The improved chart.")</div>
+## The Challenge
 
-## The Problems
+There are two main issues with the old visualization. First, it displays **all** data points on the chart and this makes the chart noisy. Second, the delta number was calculated by subtracting the last and first sampled data, which is quite unreasonable:
 
-There are two main problems in the old visualization. First, it displays **all** data points on the chart and this makes the chart noisy. Second, the delta number was calculated by subtracting the last and first sampled data, which is quite unreasonable:
-
-<div className="expand bg-[#6b6b6b]">![Old analytics chart with first and last data points highlighted](analytics-old-2.png)</div>
+<div className="framed [--frame-background:#6b6c69]">![Old analytics chart with first and last data points highlighted](analytics-old-2.png)</div>
 
 While it shows “-0.15”, all the data in between were completely ignored. As long as the most recent data point behaves better (could be one visitor with an extremely good network connection), the chart will conclude that my website is performing well.
 
@@ -35,15 +32,12 @@ After some research, I found that [curve fitting](https://en.wikipedia.org/wiki/
 
 ## Curve Fitting
 
-To demonstrate, I built an example that uses the palmerpenguins dataset[^3] to visualize the relationship between the bill length and depth of sampled penguins. It’s a bit noisy just like our Analytics chart:
-
-[^3]: [A dataset of penguin](https://allisonhorst.github.io/palmerpenguins) measurements from three different species and three islands in the Palmer Archipelago, Antarctica.
+To demonstrate, I built an example that uses the [palmerpenguins dataset](https://allisonhorst.github.io/palmerpenguins) to visualize the relationship between the bill length and depth of sampled penguins. It’s a bit noisy just like our Analytics chart:
 
 <BlockSideTitle title={<>
-  Example dataset: penguin’s bill length vs. depth<br/>
-  (<a href="https://allisonhorst.github.io/palmerpenguins">data source</a>).
+  Example dataset: penguin’s bill length vs. depth. (<a href="https://allisonhorst.github.io/palmerpenguins">data source</a>)
 </>}>
-  <iframe src="https://observablehq.com/embed/@shu/plot-regression?cells=RegressionLinear" className="max-h-[437px] aspect-[5/4]"/>
+  <iframe src="https://observablehq.com/embed/@shu/plot-regression?cells=RegressionLinear" className="max-h-[440px] aspect-[5/4]"/>
 </BlockSideTitle>
 
 There are many existing algorithms to calculate the fitting curve for a given set of data points if you already know the type of curve that you are looking for. The easiest way is to do a [linear regression](https://en.wikipedia.org/wiki/Linear_regression): finding a straight line to describe the data:
@@ -52,17 +46,21 @@ There are many existing algorithms to calculate the fitting curve for a given se
   <iframe src="https://observablehq.com/embed/@shu/plot-regression?cells=Regression%2Cviewof+param%2Cequation" className="max-h-[555px] aspect-[12/17]"/>
 </figure>
 
-Linear regression is just a special case of [**polynomial regression**](https://en.wikipedia.org/wiki/Polynomial_regression) where the order is 1. You can drag the slider above to see how different polynomial orders affect the fitting curve.
+Linear regression is just a special case of [polynomial regression](https://en.wikipedia.org/wiki/Polynomial_regression) where the order is 1. You can drag the slider above to see how different polynomial orders affect the fitting curve.
 
 When the **order** is N, the polynomial function will have a degree of N, and the curve will have N-1 turning points (so 1 is a straight line).
 
-And the [**MSE (mean squared error)**](https://en.wikipedia.org/wiki/Mean_squared_error) value measures the goodness of the fit of the curve to the data, by definition it’s <InlineMath math="MSE = \sum{\frac{(value - predictedValue)^2}{dataNum}}"/>. The smaller the error is, the better the curve describes the given data.
+And the [MSE (mean squared error)](https://en.wikipedia.org/wiki/Mean_squared_error) value measures the goodness of the fit of the curve to the data, by definition it’s:
+
+<BlockMath math="\operatorname{MSE} = \sum{\frac{(\operatorname{Value} - \operatorname{PredictedValue})^2}{\operatorname{DataCount}}}"/>
+
+The smaller the error is, the better the curve describes the given data.
 
 Usually, the easy solution would be manually choosing a reasonable order and hardcode it in our visualization. That’s what a lot of people do and in many cases, it should be okay. However when we don’t know the behavior of the data (is it constantly increasing or decreasing? is it periodic?), it’s hard to choose a good order.
 
 As you might notice, a **higher order** will result in a more “accurate” curve with a **lower error** in general, but it also results in a more noisy curve because it can turn more times to follow our data, and our data has noises! This is called [**overfitting**](https://en.wikipedia.org/wiki/Overfitting).
 
-You can play with the example below: it generates fake data points with some normal distributed randomness and then calculates the regression curve for it. For the “Constant” data set, it’s better to just use a straight line to fit (**order = 1**). However, for the “Quadratic” data set, selecting **order = 2** will result in a better curve (and it’s stable).
+You can play with the example below: it generates fake data points with some normal distributed randomness and then calculates the regression curve for it. For the “Constant” data set, it’s better to just use a straight line to fit (<InlineMath math="\operatorname{order} = 1"/>). However, for the “Quadratic” data set, selecting <InlineMath math="\operatorname{order} = 2"/> will result in a better curve (and it’s stable).
 
 <figure>
   <iframe className="max-h-[570px] aspect-[12/17]" src="https://observablehq.com/embed/@shu/plot-regression?cells=RegressionLinear1%2Cviewof+rOrder%2Cviewof+rData%2Cviewof+rType"/>
@@ -85,13 +83,13 @@ export const testSet = <span style={{ width: 10, height: 10, borderRadius: 10, b
 
 As shown in the example above, we use the {trainingSet} **training set** to calculate the fitting curve and measure the error for both the {trainingSet} **training set** and {testSet} **test set**. If you increase the order, the curve tries to follow the {trainingSet} points, but the gray lines show the error for {testSet} points.
 
-Ideally, a good fit should have a low error for both sets, as it shouldn’t be overfitting only the training set. Hence we use a simple but intuitive equation <InlineMath math="error=max(MSE(training set), MSE(test set))"/> to measure the “overall goodness” of the fit for the entire data set. Usually, when we increase the order of the polynomial regression, the error will decrease (underfitting), hit a good fit, then increase again (overfitting).
+Ideally, a good fit should have a low error for both sets, as it shouldn’t be overfitting only the training set. Hence we use a simple but intuitive equation <InlineMath math="\operatorname{error}=max(\operatorname{MSE}(\operatorname{TrainingSet}), \operatorname{MSE}(\operatorname{TestSet}))"/> to measure the “overall goodness” of the fit for the entire data set. Usually, when we increase the order of the polynomial regression, the error will decrease (underfitting), hit a good fit, then increase again (overfitting).
 
 <figure>
   <iframe className="aspect-[11/8]" src="https://observablehq.com/embed/@shu/plot-regression?cells=error"/>
 </figure>
 
-This chart shows the overall error “**max(MSE(training set), MSE(test set))**” when the polynomial regression order increases. It’s clear that when the order is 2, we have the best fit for the entire data which is what we can feel intuitively from the interactive example.
+This chart shows the overall error when the polynomial regression order increases. It’s clear that when the order is 2, we have the best fit for the entire data which is what we can feel intuitively from the interactive example.
 
 Finally, we can use that regression curve for the actual visualization and estimation. This adaptive approach is very simple, easy to implement, and turned out to be working really well for our case. Again, here’s a before/after comparison of the visualization:
 
