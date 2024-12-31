@@ -11,7 +11,6 @@ export default withMDX()({
     },
   ],
   experimental: {
-    useLightningcss: true,
     reactOwnerStack: true,
     mdxRs: {
       mdxType: 'gfm',
