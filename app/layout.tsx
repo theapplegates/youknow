@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next'
 
 import cn from 'clsx'
 import localFont from 'next/font/local'
-import { ViewTransitions } from 'next-view-transitions'
+// import { ViewTransitions } from 'next-view-transitions'
 import 'katex/dist/katex.min.css'
 
 import './globals.css'
@@ -44,35 +44,37 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return (
-    <ViewTransitions>
-      {/* It's critical to disable X direction overscroll as in many browsers
+  // <ViewTransitions>
+  {
+    /* It's critical to disable X direction overscroll as in many browsers
           it's used as the back/forward navigation gesture which shifts the
-          whole content and creates a bad experience with view transitions. */}
-      <html lang='en' className='overflow-x-hidden touch-manipulation'>
-        <body
-          className={cn(
-            sans.variable,
-            serif.variable,
-            mono.variable,
-            'w-full p-6 sm:p-10 md:p-14',
-            'text-sm leading-6 sm:text-[15px] sm:leading-7 md:text-base md:leading-7',
-            'text-rurikon-500',
-            'antialiased'
-          )}
-        >
-          <div className='fixed sm:hidden h-6 sm:h-10 md:h-14 w-full top-0 left-0 z-30 pointer-events-none content-fade-out' />
-          <div className='flex flex-col mobile:flex-row'>
-            <Navbar />
-            <main className='relative flex-1 max-w-2xl [contain:inline-size]'>
-              <div className='absolute w-full h-px opacity-50 bg-rurikon-border right-0 mobile:right-auto mobile:left-0 mobile:w-px mobile:h-full mobile:opacity-100' />
-              <article className='pl-0 pt-6 mobile:pt-0 mobile:pl-6 sm:pl-10 md:pl-14'>
-                {children}
-              </article>
-            </main>
-          </div>
-        </body>
-      </html>
-    </ViewTransitions>
+          whole content and creates a bad experience with view transitions. */
+  }
+  return (
+    <html lang='en' className='overflow-x-hidden touch-manipulation'>
+      <body
+        className={cn(
+          sans.variable,
+          serif.variable,
+          mono.variable,
+          'w-full p-6 sm:p-10 md:p-14',
+          'text-sm leading-6 sm:text-[15px] sm:leading-7 md:text-base md:leading-7',
+          'text-rurikon-500',
+          'antialiased'
+        )}
+      >
+        <div className='fixed sm:hidden h-6 sm:h-10 md:h-14 w-full top-0 left-0 z-30 pointer-events-none content-fade-out' />
+        <div className='flex flex-col mobile:flex-row'>
+          <Navbar />
+          <main className='relative flex-1 max-w-2xl [contain:inline-size]'>
+            <div className='absolute w-full h-px opacity-50 bg-rurikon-border right-0 mobile:right-auto mobile:left-0 mobile:w-px mobile:h-full mobile:opacity-100' />
+            <article className='pl-0 pt-6 mobile:pt-0 mobile:pl-6 sm:pl-10 md:pl-14'>
+              {children}
+            </article>
+          </main>
+        </div>
+      </body>
+    </html>
   )
+  // </ViewTransitions>
 }

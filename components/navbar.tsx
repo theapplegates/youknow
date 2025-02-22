@@ -2,7 +2,8 @@
 
 import cn from 'clsx'
 import { usePathname } from 'next/navigation'
-import { Link } from 'next-view-transitions'
+// import { Link } from 'next-view-transitions'
+import Link from 'next/link'
 
 function Item(props: React.ComponentProps<typeof Link>) {
   const pathname = usePathname()
