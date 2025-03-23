@@ -11,7 +11,7 @@ export default withMDX()({
     },
   ],
   experimental: {
-    reactOwnerStack: true,
+    viewTransition: true,
     mdxRs: {
       mdxType: 'gfm',
     },

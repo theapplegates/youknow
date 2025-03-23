@@ -1,9 +1,9 @@
 export const metadata = {
-  title: 'Another Enlightment',
+  title: 'Enlightment, Again',
   date: '2024.09.29'
 }
 
-# Another Enlightment
+# Enlightment, Again
 
 > The reality we can put into words is never reality itself.
 
@@ -37,7 +37,14 @@ function readFile() {
 
 But the side effect of `performance.now()` is that it changes the behavior of the operation itself. And that scales exponentially with the size of the system.
 
-This is also called the [Probe Effect](https://en.wikipedia.org/wiki/Probe_effect). The act of measuring changes the thing being measured. Or [Heisenbugs](https://en.wikipedia.org/wiki/Heisenbug).
+```js
+// unknown number of file reads spread across the system
+for (let i = 0; i < x; i++) {
+  readFile()
+}
+```
 
-> We can never know anything.
+This is also called the [Probe Effect](https://en.wikipedia.org/wiki/Probe_effect). The act of measuring changes the thing being measured. [Heisenbugs](https://en.wikipedia.org/wiki/Heisenbug) is another interesting term.
+
+> We can never know anything.  
 > — Werner Heisenberg
