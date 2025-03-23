@@ -46,12 +46,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // <ViewTransitions>
-  {
-    /* It's critical to disable X direction overscroll as in many browsers
-          it's used as the back/forward navigation gesture which shifts the
-          whole content and creates a bad experience with view transitions. */
-  }
   return (
     <html lang='en' className='overflow-x-hidden touch-manipulation'>
       <body
@@ -80,5 +74,4 @@ export default function RootLayout({
       </body>
     </html>
   )
-  // </ViewTransitions>
 }
