@@ -111,7 +111,13 @@ del {
 }
 
 blockquote {
-  border-left: 1px solid var(--color-rurikon-500);
+  box-shadow: 1px 0 0 var(--color-rurikon-500) inset;
+}
+@media screen and (max-width: 420px) {
+  blockquote {
+    /* Make it wider on mobile with a lighter color */
+    box-shadow: 2px 0 0 var(--color-rurikon-300) inset;
+  }
 }
 
 blockquote + blockquote {
