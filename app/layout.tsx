@@ -1,8 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-
-// @ts-expect-error types are not available yet?
 import { unstable_ViewTransition as ViewTransition } from 'react'
-
 import cn from 'clsx'
 import localFont from 'next/font/local'
 import 'katex/dist/katex.min.css'
@@ -11,27 +8,27 @@ import Navbar from '@/components/navbar'
 import './globals.css'
 
 const sans = localFont({
-  src: './_fonts/InterVariable.woff2',
+  src: './_fonts/wotfard-regular-webfont.woff2',
   preload: true,
   variable: '--sans',
 })
 
 const serif = localFont({
-  src: './_fonts/LoraItalicVariable.woff2',
+  src: './_fonts/wotfard-extralightitalic-webfont.woff2',
   preload: true,
   variable: '--serif',
 })
 
 const mono = localFont({
-  src: './_fonts/IosevkaFixedCurly-ExtendedMedium.woff2',
+  src: './_fonts/wotfard-extralightitalic-webfont.woff2',
   preload: true,
   variable: '--mono',
 })
 
 export const metadata: Metadata = {
   title: {
-    template: '%s - Shu Ding',
-    default: 'Shu Ding',
+    template: '%s - Paul Applegate',
+    default: 'Paul Applegate',
   },
 }
 
