@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Responsive Breakpoints Generator - Cloudinary Integration</title>
+	<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+	<style>
+		:root {
+			--primary: #3448c5;
+			--primary-dark: #2a3aa2;
+			--secondary: #6c757d;
+			--success: #28a745;
+			--danger: #dc3545;
+			--warning: #ffc107;
+			--info: #17a2b8;
+			--light: #f8f9fa;
+			--dark: #343a40;
+			--white: #ffffff;
+			--gray-100: #f8f9fa;
+			--gray-200: #e9ecef;
+			--gray-300: #dee2e6;
+			--gray-400: #ced4da;
+			--gray-500: #adb5bd;
+			--gray-600: #6c757d;
+			--gray-700: #495057;
+			--gray-800: #343a40;
+			--gray-900: #212529;
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: Geist ;
+			line-height: 1.6;
+			color: var(--gray-900);
+			background-color: var(--gray-100);
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 20px;
+		}
+
+		header {
+			background-color: var(--white);
+			box-shadow: 0 2px 4px rgba(0,0,0,.1);
+			padding: 1.5rem 0;
+			position: sticky;
+			top: 0;
+			z-index: 1000;
+		}
+
+		.header-content {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.logo {
+			font-size: 1.5rem;
+			font-weight: bold;
+			color: var(--primary);
+			text-decoration: none;
+		}
+
+		.hero {
+			background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+			color: var(--white);
+			padding: 4rem 0;
+			text-align: center;
+		}
+
+		.hero h1 {
+			font-size: 2.5rem;
+			margin-bottom: 1rem;
+			font-weight: 700;
+		}
+
+		.hero p {
+			font-size: 1.25rem;
+			opacity: 0.9;
+			max-width: 600px;
+			margin: 0 auto;
+		}
+
+		.main-content {
+			padding: 3rem 0;
+		}
+
+		.upload-section {
+			background: var(--white);
+			border-radius: 12px;
+			padding: 2rem;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			margin-bottom: 2rem;
+		}
+
+		.settings-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 1.5rem;
+			margin-bottom: 2rem;
+		}
+
+		.form-group {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.form-group label {
+			font-weight: 600;
+			margin-bottom: 0.5rem;
+			color: var(--gray-700);
+		}
+
+		.form-group input,
+		.form-group select {
+			padding: 0.75rem;
+			border: 2px solid var(--gray-300);
+			border-radius: 8px;
+			font-size: 1rem;
+			transition: border-color 0.3s;
+		}
+
+		.form-group input:focus,
+		.form-group select:focus {
+			outline: none;
+			border-color: var(--primary);
+		}
+
+		.btn {
+			display: inline-block;
+			padding: 0.75rem 1.5rem;
+			border: none;
+			border-radius: 8px;
+			font-size: 1rem;
+			font-weight: 600;
+			text-decoration: none;
+			cursor: pointer;
+			transition: all 0.3s;
+			text-align: center;
+		}
+
+		.btn-primary {
+			background-color: var(--primary);
+			color: var(--white);
+		}
+
+		.btn-primary:hover {
+			background-color: var(--primary-dark);
+			transform: translateY(-2px);
+			box-shadow: 0 4px 8px rgba(52, 72, 197, 0.3);
+		}
+
+		.btn-secondary {
+			background-color: var(--secondary);
+			color: var(--white);
+		}
+
+		.btn-secondary:hover {
+			background-color: var(--gray-700);
+		}
+
+		.upload-button {
+			width: 100%;
+			padding: 2rem;
+			background-color: var(--primary);
+			color: var(--white);
+			border: none;
+			border-radius: 12px;
+			font-size: 1.2rem;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.3s;
+			margin-bottom: 2rem;
+		}
+
+		.upload-button:hover {
+			background-color: var(--primary-dark);
+			transform: translateY(-2px);
+			box-shadow: 0 4px 8px rgba(52, 72, 197, 0.3);
+		}
+
+		.upload-button:disabled {
+			background-color: var(--gray-400);
+			cursor: not-allowed;
+			transform: none;
+		}
+
+		.processing {
+			display: none;
+			text-align: center;
+			padding: 2rem;
+		}
+
+		.processing.active {
+			display: block;
+		}
+
+		.spinner {
+			border: 3px solid var(--gray-300);
+			border-top: 3px solid var(--primary);
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			animation: spin 1s linear infinite;
+			margin: 0 auto 1rem;
+		}
+
+		@keyframes spin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+
+		.results-section {
+			background: var(--white);
+			border-radius: 12px;
+			padding: 2rem;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			display: none;
+		}
+
+		.results-section.active {
+			display: block;
+		}
+
+		.preview-container {
+			display: grid;
+			grid-template-columns: 1fr 2fr;
+			gap: 2rem;
+			margin-bottom: 2rem;
+		}
+
+		.preview-image {
+			width: 100%;
+			height: auto;
+			border-radius: 8px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		}
+
+		.breakpoints-list {
+			display: grid;
+			gap: 0.5rem;
+			max-height: 400px;
+			overflow-y: auto;
+		}
+
+		.breakpoint-item {
+			display: grid;
+			grid-template-columns: 1fr auto auto;
+			align-items: center;
+			gap: 1rem;
+			padding: 0.75rem;
+			background-color: var(--gray-100);
+			border-radius: 8px;
+			transition: background-color 0.3s;
+			font-size: 0.9rem;
+		}
+
+		.breakpoint-item:hover {
+			background-color: var(--gray-200);
+		}
+
+		.breakpoint-size {
+			font-weight: 600;
+			color: var(--primary);
+		}
+
+		.breakpoint-file-size {
+			color: var(--gray-600);
+		}
+
+		.code-output {
+			background-color: var(--gray-900);
+			color: var(--gray-100);
+			padding: 1.5rem;
+			border-radius: 8px;
+			overflow-x: auto;
+			margin-top: 2rem;
+			font-family: 'GeistMonos';
+			font-size: 0.9rem;
+		}
+
+		.code-output pre {
+			margin: 0;
+			white-space: pre-wrap;
+		}
+
+		.code-tabs {
+			display: flex;
+			gap: 0.5rem;
+			margin-bottom: 1rem;
+		}
+
+		.code-tab {
+			padding: 0.5rem 1rem;
+			background-color: var(--gray-700);
+			color: var(--white);
+			border: none;
+			border-radius: 4px 4px 0 0;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+
+		.code-tab.active {
+			background-color: var(--gray-900);
+		}
+
+		.features {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 2rem;
+			margin-top: 3rem;
+		}
+
+		.feature-card {
+			background: var(--white);
+			padding: 2rem;
+			border-radius: 12px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			text-align: center;
+			transition: transform 0.3s;
+		}
+
+		.feature-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+		}
+
+		.feature-icon {
+			font-size: 3rem;
+			color: var(--primary);
+			margin-bottom: 1rem;
+		}
+
+		.feature-card h3 {
+			color: var(--gray-800);
+			margin-bottom: 0.5rem;
+		}
+
+		.feature-card p {
+			color: var(--gray-600);
+		}
+
+		footer {
+			background-color: var(--gray-800);
+			color: var(--white);
+			padding: 2rem 0;
+			text-align: center;
+			margin-top: 4rem;
+		}
+
+		footer a {
+			color: var(--primary);
+			text-decoration: none;
+		}
+
+		footer a:hover {
+			text-decoration: underline;
+		}
+
+		.warning {
+			background-color: var(--warning);
+			color: var(--dark);
+			padding: 1rem;
+			border-radius: 8px;
+			margin-bottom: 1rem;
+			font-weight: 600;
+		}
+
+		.error-message {
+			background-color: var(--danger);
+			color: var(--white);
+			padding: 1rem;
+			border-radius: 8px;
+			margin-bottom: 1rem;
+			display: none;
+		}
+
+		.error-message.active {
+			display: block;
+		}
+
+		.success-message {
+			background-color: var(--success);
+			color: var(--white);
+			padding: 1rem;
+			border-radius: 8px;
+			margin-bottom: 1rem;
+			display: none;
+		}
+
+		.success-message.active {
+			display: block;
+		}
+
+		.checkbox-group {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+		}
+
+		.checkbox-group input[type="checkbox"] {
+			width: auto;
+			margin: 0;
+		}
+
+		@media (max-width: 768px) {
+			.hero h1 {
+				font-size: 2rem;
+			}
+
+			.hero p {
+				font-size: 1rem;
+			}
+
+			.settings-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.preview-container {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		.copy-button {
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+			background-color: var(--primary);
+			color: var(--white);
+			border: none;
+			padding: 0.5rem 1rem;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 0.9rem;
+		}
+
+		.copy-button:hover {
+			background-color: var(--primary-dark);
+		}
+
+		.code-container {
+			position: relative;
+		}
+
+		.loading-widget {
+			display: inline-block;
+			margin-left: 1rem;
+			color: var(--gray-600);
+			font-size: 0.9rem;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div class="container">
+			<div class="header-content">
+				<a href="#" class="logo">🖼️ Responsive Breakpoints</a>
+				<nav>
+					<a href="#features" class="btn btn-secondary">Features</a>
+				</nav>
+			</div>
+		</div>
+	</header>
+
+	<section class="hero">
+		<div class="container">
+			<h1>Responsive Image Breakpoints Generator</h1>
+			<p>Automatically generate optimal image sizes for responsive web design using Cloudinary's advanced algorithms</p>
+		</div>
+	</section>
+
+	<main class="main-content">
+		<div class="container">
+			<div class="upload-section">
+				<h2>Generate Responsive Breakpoints</h2>
+				
+				<div class="warning">
+					⚠️ <strong>Important Setup Required:</strong><br>
+					1. Go to your Cloudinary Dashboard → Settings → Upload<br>
+					2. Create an "unsigned" upload preset<br>
+					3. Update the CLOUDINARY_UPLOAD_PRESET in the code with your preset name<br>
+					4. Current Cloud Name: paulapplegate-com<br>
+					<div id="debugInfo" style="margin-top: 10px; font-size: 0.9em; color: #333;">
+						<strong>Status:</strong> <span id="statusText">Initializing...</span><br>
+						<small style="color: #666;">If loading fails: Check for ad blockers, ensure HTTP/HTTPS (not file://), and verify internet connection.</small>
+					</div>
+				</div>
+
+				<div class="error-message" id="errorMessage"></div>
+				<div class="success-message" id="successMessage"></div>
+				
+				<button class="upload-button" id="uploadButton" disabled>
+					📤 Upload Image to Generate Breakpoints
+					<span class="loading-widget" id="loadingWidget">Loading widget...</span>
+				</button>
+
+				<div class="processing" id="processing">
+					<div class="spinner"></div>
+					<p>Generating breakpoints...</p>
+				</div>
+
+				<div class="settings-grid">
+					<div class="form-group">
+						<label for="minWidth">Min Width (px)</label>
+						<input type="number" id="minWidth" value="200" min="50" max="2000">
+					</div>
+					<div class="form-group">
+						<label for="maxWidth">Max Width (px)</label>
+						<input type="number" id="maxWidth" value="1000" min="200" max="4000">
+					</div>
+					<div class="form-group">
+						<label for="bytesStep">File Size Step (KB)</label>
+						<input type="number" id="bytesStep" value="20" min="5" max="100">
+					</div>
+					<div class="form-group">
+						<label for="maxImages">Max Images</label>
+						<input type="number" id="maxImages" value="20" min="3" max="50">
+					</div>
+					<div class="form-group">
+						<label for="transformation">Transformation</label>
+						<select id="transformation">
+							<option value="">None (Original)</option>
+							<option value="c_fill,ar_16:9,g_auto">16:9 Fill</option>
+							<option value="c_fill,ar_4:3,g_auto">4:3 Fill</option>
+							<option value="c_fill,ar_1:1,g_auto">1:1 Square</option>
+							<option value="c_fit">Fit</option>
+							<option value="c_limit">Limit</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label class="checkbox-group">
+							<input type="checkbox" id="retina" checked>
+							<span>Include 2x (Retina) Images</span>
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="results-section" id="resultsSection">
+				<h2>Generated Breakpoints</h2>
+				<div class="preview-container">
+					<img class="preview-image" id="previewImage" alt="Preview">
+					<div>
+						<h3>Responsive Breakpoints</h3>
+						<div class="breakpoints-list" id="breakpointsList"></div>
+					</div>
+				</div>
+				
+				<div class="code-tabs">
+					<button class="code-tab active" onclick="showCodeTab('html')">HTML</button>
+					<button class="code-tab" onclick="showCodeTab('css')">CSS</button>
+					<button class="code-tab" onclick="showCodeTab('react')">React</button>
+				</div>
+				
+				<div class="code-container">
+					<button class="copy-button" onclick="copyCode()">Copy Code</button>
+					<div class="code-output">
+						<pre id="codeOutput"></pre>
+					</div>
+				</div>
+				
+				<div style="margin-top: 2rem;">
+					<button class="btn btn-primary" id="downloadConfigBtn">Download Config</button>
+					<button class="btn btn-secondary" id="resetBtn">Generate New</button>
+				</div>
+			</div>
+
+			<div class="features" id="features">
+				<div class="feature-card">
+					<div class="feature-icon">🎯</div>
+					<h3>Smart Breakpoints</h3>
+					<p>Automatically finds optimal image sizes based on file size steps, not fixed widths</p>
+				</div>
+				<div class="feature-card">
+					<div class="feature-icon">⚡</div>
+					<h3>Cloudinary Powered</h3>
+					<p>Uses Cloudinary's advanced algorithms for intelligent image optimization</p>
+				</div>
+				<div class="feature-card">
+					<div class="feature-icon">📱</div>
+					<h3>Retina Ready</h3>
+					<p>Includes 2x resolution images for high-DPI displays automatically</p>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<div class="container">
+			<p>Built with Cloudinary | <a href="https://cloudinary.com" target="_blank">Learn more about Cloudinary</a></p>
+		</div>
+	</footer>
+
+	<script>
+		// Configuration - MAKE SURE TO UPDATE THESE
+		const CLOUDINARY_CLOUD_NAME = 'paulapplegate-com';
+		const CLOUDINARY_UPLOAD_PRESET = 'unsigned'; // You need to create an unsigned upload preset in your Cloudinary settings
+		
+		// Initialize variables
+		let myWidget = null;
+		let uploadedImageData = null;
+		let generatedBreakpoints = [];
+		let currentCodeTab = 'html';
+		
+		// Get DOM elements
+		const uploadButton = document.getElementById('uploadButton');
+		const loadingWidget = document.getElementById('loadingWidget');
+		const processing = document.getElementById('processing');
+		const resultsSection = document.getElementById('resultsSection');
+		const errorMessage = document.getElementById('errorMessage');
+		const successMessage = document.getElementById('successMessage');
+		const previewImage = document.getElementById('previewImage');
+		const breakpointsList = document.getElementById('breakpointsList');
+		const codeOutput = document.getElementById('codeOutput');
+		const downloadConfigBtn = document.getElementById('downloadConfigBtn');
+		const resetBtn = document.getElementById('resetBtn');
+		const statusText = document.getElementById('statusText');
+
+		// Settings inputs
+		const minWidth = document.getElementById('minWidth');
+		const maxWidth = document.getElementById('maxWidth');
+		const bytesStep = document.getElementById('bytesStep');
+		const maxImages = document.getElementById('maxImages');
+		const transformation = document.getElementById('transformation');
+		const retina = document.getElementById('retina');
+
+		// Update status
+		function updateStatus(message, isError = false) {
+			if (statusText) {
+				statusText.textContent = message;
+				statusText.style.color = isError ? '#dc3545' : '#333';
+			}
+			console.log('Status:', message);
+		}
+
+		// Check if Cloudinary is loaded
+		function checkCloudinaryLoaded() {
+			return new Promise((resolve, reject) => {
+				// First, immediate check
+				if (window.cloudinary && typeof window.cloudinary.createUploadWidget === 'function') {
+					console.log('Cloudinary already loaded');
+					updateStatus('Cloudinary loaded successfully');
+					resolve();
+					return;
+				}
+
+				console.log('Waiting for Cloudinary to load...');
+				updateStatus('Waiting for Cloudinary script to load...');
+				
+				// Check every 100ms for up to 10 seconds
+				let attempts = 0;
+				const checkInterval = setInterval(() => {
+					attempts++;
+					
+					// Debug logging
+					if (attempts % 10 === 0) {
+						console.log(`Still waiting for Cloudinary... (${attempts/10}s)`);
+						console.log('window.cloudinary:', window.cloudinary);
+						updateStatus(`Still loading Cloudinary... (${attempts/10}s)`);
+					}
+					
+					if (window.cloudinary && typeof window.cloudinary.createUploadWidget === 'function') {
+						clearInterval(checkInterval);
+						console.log('Cloudinary loaded successfully');
+						updateStatus('Cloudinary loaded successfully');
+						resolve();
+					} else if (attempts > 100) { // 10 seconds
+						clearInterval(checkInterval);
+						console.error('Cloudinary check timeout. window.cloudinary:', window.cloudinary);
+						updateStatus('Cloudinary loading timeout', true);
+						reject(new Error('Cloudinary widget script did not load within 10 seconds'));
+					}
+				}, 100);
+			});
+		}
+
+		// Fallback: Try to load Cloudinary manually
+		function loadCloudinaryManually() {
+			return new Promise((resolve, reject) => {
+				// Check if script already exists
+				const existingScript = document.querySelector('script[src*="cloudinary.com"]');
+				if (existingScript) {
+					existingScript.remove();
+				}
+				
+				const script = document.createElement('script');
+				script.src = 'https://widget.cloudinary.com/v2.0/global/all.js';
+				script.type = 'text/javascript';
+				
+				script.onload = () => {
+					console.log('Cloudinary script loaded manually');
+					setTimeout(() => {
+						if (window.cloudinary) {
+							resolve();
+						} else {
+							reject(new Error('Script loaded but cloudinary object not available'));
+						}
+					}, 500);
+				};
+				
+				script.onerror = () => {
+					reject(new Error('Failed to load Cloudinary script'));
+				};
+				
+				document.head.appendChild(script);
+			});
+		}
+
+		// Initialize Cloudinary Upload Widget
+		async function initializeWidget() {
+			try {
+				console.log('Starting widget initialization...');
+				
+				// Try to load Cloudinary
+				try {
+					await checkCloudinaryLoaded();
+				} catch (firstError) {
+					console.warn('Initial load failed, trying manual load...', firstError);
+					
+					// Try manual loading as fallback
+					try {
+						await loadCloudinaryManually();
+						await checkCloudinaryLoaded();
+					} catch (secondError) {
+						throw new Error('Failed to load Cloudinary after manual attempt: ' + secondError.message);
+					}
+				}
+				
+				if (!window.cloudinary || typeof window.cloudinary.createUploadWidget !== 'function') {
+					throw new Error('Cloudinary object is not properly initialized');
+				}
+
+				console.log('Creating upload widget with config:', {
+					cloudName: CLOUDINARY_CLOUD_NAME,
+					uploadPreset: CLOUDINARY_UPLOAD_PRESET
+				});
+				
+				updateStatus('Creating upload widget...');
+
+				myWidget = cloudinary.createUploadWidget({
+					cloudName: CLOUDINARY_CLOUD_NAME,
+					uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+					sources: ['local', 'url', 'camera'],
+					multiple: false,
+					maxFiles: 1,
+					resourceType: 'image',
+					clientAllowedFormats: ['jxl', 'jpeg', 'png', 'gif', 'webp'],
+					maxFileSize: 10000000, // 10MB
+					showAdvancedOptions: false,
+					cropping: false,
+					showSkipCropButton: false,
+					theme: 'minimal',
+					styles: {
+						palette: {
+							window: '#FFFFFF',
+							windowBorder: '#90A0B3',
+							tabIcon: '#3448c5',
+							menuIcons: '#5A616A',
+							textDark: '#000000',
+							textLight: '#FFFFFF',
+							link: '#3448c5',
+							action: '#3448c5',
+							inactiveTabIcon: '#0E2F5A',
+							error: '#F44235',
+							inProgress: '#3448c5',
+							complete: '#20B832',
+							sourceBg: '#E4EBF1'
+						}
+					}
+				}, (error, result) => {
+					if (!error && result && result.event === 'success') {
+						console.log('Upload successful:', result.info);
+						handleUploadSuccess(result.info);
+					} else if (error) {
+						console.error('Upload error:', error);
+						showError('Upload failed: ' + (error.message || 'Unknown error'));
+					}
+				});
+				
+				if (!myWidget) {
+					throw new Error('Widget creation returned null');
+				}
+				
+				// Enable the upload button and hide loading text
+				uploadButton.disabled = false;
+				loadingWidget.style.display = 'none';
+				uploadButton.innerHTML = '📤 Upload Image to Generate Breakpoints';
+				console.log('Widget initialized successfully');
+				updateStatus('Ready to upload! Click the button above to select an image.');
+				
+			} catch (error) {
+				console.error('Widget initialization error:', error);
+				showError('Failed to initialize upload widget: ' + error.message);
+				updateStatus('Widget initialization failed: ' + error.message, true);
+				
+				// Show retry button
+				uploadButton.disabled = false;
+				uploadButton.innerHTML = '🔄 Retry Loading Widget';
+				loadingWidget.style.display = 'none';
+				
+				// Change click handler to retry
+				uploadButton.onclick = () => {
+					uploadButton.disabled = true;
+					uploadButton.innerHTML = '📤 Upload Image to Generate Breakpoints <span class="loading-widget" id="loadingWidget">Loading widget...</span>';
+					updateStatus('Retrying widget initialization...');
+					initializeWidget();
+				};
+			}
+		}
+		
+		// Initialize widget when page loads
+		window.addEventListener('load', () => {
+			console.log('Page loaded, initializing widget...');
+			console.log('Current URL:', window.location.href);
+			console.log('Protocol:', window.location.protocol);
+			
+			updateStatus('Page loaded, checking environment...');
+			
+			// Check if we're in a potentially restricted environment
+			if (window.location.protocol === 'file:') {
+				updateStatus('Error: This page needs to be served over HTTP/HTTPS', true);
+				showError('This page needs to be served over HTTP/HTTPS. Please use a local server or upload to a web host.');
+				uploadButton.innerHTML = '⚠️ Requires HTTP/HTTPS Server';
+				uploadButton.disabled = true;
+				return;
+			}
+			
+			updateStatus('Initializing Cloudinary widget...');
+			initializeWidget();
+		});
+
+		// Also try on DOMContentLoaded as backup
+		document.addEventListener('DOMContentLoaded', () => {
+			console.log('DOM loaded');
+			// Give it a second to see if window.onload fires
+			setTimeout(() => {
+				if (!myWidget && uploadButton.disabled) {
+					console.log('Window.onload might have failed, trying initialization anyway...');
+					initializeWidget();
+				}
+			}, 2000);
+		});
+
+		// Upload button click handler
+		uploadButton.addEventListener('click', () => {
+			if (myWidget) {
+				try {
+					myWidget.open();
+				} catch (error) {
+					console.error('Error opening widget:', error);
+					showError('Error opening upload widget: ' + error.message);
+				}
+			} else {
+				console.log('Widget not initialized, retrying...');
+				showError('Upload widget not initialized. Retrying...');
+				// Try to reinitialize
+				uploadButton.disabled = true;
+				loadingWidget.style.display = 'inline-block';
+				initializeWidget();
+			}
+		});
+
+		// Handle successful upload
+		function handleUploadSuccess(info) {
+			uploadedImageData = info;
+			showSuccess('Image uploaded successfully!');
+			generateBreakpoints();
+		}
+
+		// Generate breakpoints
+		function generateBreakpoints() {
+			processing.classList.add('active');
+			uploadButton.style.display = 'none';
+
+			// Get settings
+			const settings = {
+				minWidth: parseInt(minWidth.value),
+				maxWidth: parseInt(maxWidth.value),
+				bytesStep: parseInt(bytesStep.value) * 1024,
+				maxImages: parseInt(maxImages.value),
+				transformation: transformation.value,
+				includeRetina: retina.checked
+			};
+
+			// Calculate breakpoints based on file size steps
+			generatedBreakpoints = [];
+			const aspectRatio = uploadedImageData.width / uploadedImageData.height;
+			
+			// Generate width breakpoints
+			let widths = [];
+			let currentWidth = settings.maxWidth;
+			
+			while (currentWidth >= settings.minWidth && widths.length < settings.maxImages) {
+				widths.push(currentWidth);
+				// Calculate next width based on file size reduction
+				// This is an approximation - actual file size depends on image content
+				currentWidth = Math.round(currentWidth * 0.8); // 20% reduction
+			}
+
+			// Create breakpoint objects
+			widths.forEach(width => {
+				const height = Math.round(width / aspectRatio);
+				const baseUrl = uploadedImageData.secure_url;
+				
+				// Generate transformation URL
+				let transformParams = `w_${width}`;
+				if (settings.transformation) {
+					transformParams = `${settings.transformation},w_${width}`;
+				}
+				
+				const url = baseUrl.replace('/upload/', `/upload/${transformParams}/`);
+				
+				generatedBreakpoints.push({
+					width: width,
+					height: height,
+					url: url,
+					size: estimateFileSize(width, height), // Estimate
+					format: uploadedImageData.format
+				});
+			});
+
+			// Add retina versions if enabled
+			if (settings.includeRetina) {
+				const retinaBreakpoints = [];
+				generatedBreakpoints.forEach(bp => {
+					const retinaWidth = bp.width * 2;
+					if (retinaWidth <= uploadedImageData.width) {
+						let transformParams = `w_${retinaWidth},dpr_2.0`;
+						if (settings.transformation) {
+							transformParams = `${settings.transformation},w_${retinaWidth},dpr_2.0`;
+						}
+						const url = uploadedImageData.secure_url.replace('/upload/', `/upload/${transformParams}/`);
+						
+						retinaBreakpoints.push({
+							width: bp.width,
+							actualWidth: retinaWidth,
+							height: bp.height,
+							actualHeight: bp.height * 2,
+							url: url,
+							size: estimateFileSize(retinaWidth, bp.height * 2),
+							format: uploadedImageData.format,
+							retina: true
+						});
+					}
+				});
+				generatedBreakpoints = [...generatedBreakpoints, ...retinaBreakpoints];
+			}
+
+			// Display results
+			setTimeout(() => {
+				displayResults();
+			}, 1000);
+		}
+
+		// Estimate file size based on dimensions
+		function estimateFileSize(width, height) {
+			// Very rough estimation: ~0.1 bytes per pixel for JPEG
+			return Math.round(width * height * 0.1);
+		}
+
+		// Display results
+		function displayResults() {
+			processing.classList.remove('active');
+			resultsSection.classList.add('active');
+			
+			// Show preview
+			previewImage.src = uploadedImageData.secure_url;
+			
+			// Display breakpoints
+			breakpointsList.innerHTML = '';
+			generatedBreakpoints.forEach(bp => {
+				const item = document.createElement('div');
+				item.className = 'breakpoint-item';
+				const displayWidth = bp.retina ? `${bp.width}w @2x` : `${bp.width}w`;
+				item.innerHTML = `
+					<span class="breakpoint-size">${displayWidth}</span>
+					<span class="breakpoint-file-size">~${formatFileSize(bp.size)}</span>
+					<a href="${bp.url}" target="_blank" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">View</a>
+				`;
+				breakpointsList.appendChild(item);
+			});
+
+			// Generate code
+			updateCode();
+		}
+
+		// Show code tab
+		window.showCodeTab = function(tab) {
+			currentCodeTab = tab;
+			document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+			event.target.classList.add('active');
+			updateCode();
+		}
+
+		// Update code output
+		function updateCode() {
+			let code = '';
+			const regularBreakpoints = generatedBreakpoints.filter(bp => !bp.retina);
+			
+			switch (currentCodeTab) {
+				case 'html':
+					code = generateHTMLCode(regularBreakpoints);
+					break;
+				case 'css':
+					code = generateCSSCode(regularBreakpoints);
+					break;
+				case 'react':
+					code = generateReactCode(regularBreakpoints);
+					break;
+			}
+			
+			codeOutput.textContent = code;
+		}
+
+		// Generate HTML code
+		function generateHTMLCode(breakpoints) {
+			const srcset = breakpoints.map(bp => `${bp.url} ${bp.width}w`).join(',\n    ');
+			const sizes = generateSizes(breakpoints);
+			
+			return `<picture>
+	<source srcset="${srcset}"
+			sizes="${sizes}">
+	<img src="${breakpoints[0].url}" 
+		 alt="Responsive image"
+		 loading="lazy">
+</picture>`;
+		}
+
+		// Generate CSS code
+		function generateCSSCode(breakpoints) {
+			let css = `.responsive-image {\n    width: 100%;\n    height: auto;\n}\n\n`;
+			
+			breakpoints.forEach((bp, index) => {
+				if (index === 0) {
+					css += `/* Default (mobile-first) */\n`;
+					css += `.responsive-bg {\n    background-image: url('${bp.url}');\n}\n\n`;
+				} else {
+					css += `@media (min-width: ${bp.width}px) {\n`;
+					css += `    .responsive-bg {\n        background-image: url('${bp.url}');\n    }\n}\n\n`;
+				}
+			});
+			
+			return css;
+		}
+
+		// Generate React code
+		function generateReactCode(breakpoints) {
+			const srcSet = breakpoints.map(bp => `${bp.url} ${bp.width}w`).join(', ');
+			const sizes = generateSizes(breakpoints);
+			
+			return `import React from 'react';
+
+const ResponsiveImage = () => {
+	return (
+		<picture>
+			<source 
+				srcSet="${srcSet}"
+				sizes="${sizes}"
+			/>
+			<img 
+				src="${breakpoints[0].url}"
+				alt="Responsive image"
+				loading="lazy"
+				style={{ width: '100%', height: 'auto' }}
+			/>
+		</picture>
+	);
+};
+
+export default ResponsiveImage;`;
+		}
+
+		// Generate sizes attribute
+		function generateSizes(breakpoints) {
+			const sizes = [];
+			breakpoints.forEach((bp, index) => {
+				if (index < breakpoints.length - 1) {
+					sizes.push(`(max-width: ${bp.width}px) ${bp.width}px`);
+				} else {
+					sizes.push(`${bp.width}px`);
+				}
+			});
+			return sizes.join(', ');
+		}
+
+		// Copy code to clipboard
+		window.copyCode = function() {
+			const code = codeOutput.textContent;
+			navigator.clipboard.writeText(code).then(() => {
+				showSuccess('Code copied to clipboard!');
+			}).catch(() => {
+				showError('Failed to copy code');
+			});
+		}
+
+		// Download configuration
+		downloadConfigBtn.addEventListener('click', () => {
+			const config = {
+				cloudName: CLOUDINARY_CLOUD_NAME,
+				publicId: uploadedImageData.public_id,
+				settings: {
+					minWidth: parseInt(minWidth.value),
+					maxWidth: parseInt(maxWidth.value),
+					bytesStep: parseInt(bytesStep.value),
+					maxImages: parseInt(maxImages.value),
+					transformation: transformation.value,
+					includeRetina: retina.checked
+				},
+				breakpoints: generatedBreakpoints
+			};
+			
+			const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = 'responsive-breakpoints-config.json';
+			a.click();
+			URL.revokeObjectURL(url);
+			showSuccess('Configuration downloaded!');
+		});
+
+		// Reset
+		resetBtn.addEventListener('click', () => {
+			uploadButton.style.display = 'block';
+			resultsSection.classList.remove('active');
+			uploadedImageData = null;
+			generatedBreakpoints = [];
+			errorMessage.classList.remove('active');
+			successMessage.classList.remove('active');
+		});
+
+		// Utility functions
+		function formatFileSize(bytes) {
+			if (bytes < 1024) return bytes + ' B';
+			if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+			return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+		}
+
+		function showError(message) {
+			console.error('Error:', message);
+			errorMessage.textContent = message;
+			errorMessage.classList.add('active');
+			setTimeout(() => {
+				errorMessage.classList.remove('active');
+			}, 5000);
+		}
+
+		function showSuccess(message) {
+			successMessage.textContent = message;
+			successMessage.classList.add('active');
+			setTimeout(() => {
+				successMessage.classList.remove('active');
+			}, 3000);
+		}
+
+		// Smooth scrolling for anchor links
+		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+			anchor.addEventListener('click', function (e) {
+				e.preventDefault();
+				const target = document.querySelector(this.getAttribute('href'));
+				if (target) {
+					target.scrollIntoView({
+						behavior: 'smooth'
+					});
+				}
+			});
+		});
+
+		// Initialize settings from URL parameters if present
+		const urlParams = new URLSearchParams(window.location.search);
+		if (urlParams.has('minWidth')) minWidth.value = urlParams.get('minWidth');
+		if (urlParams.has('maxWidth')) maxWidth.value = urlParams.get('maxWidth');
+		if (urlParams.has('bytesStep')) bytesStep.value = urlParams.get('bytesStep');
+		if (urlParams.has('maxImages')) maxImages.value = urlParams.get('maxImages');
+
+		// Debug info
+		console.log('Cloudinary Configuration:', {
+			cloudName: CLOUDINARY_CLOUD_NAME,
+			uploadPreset: CLOUDINARY_UPLOAD_PRESET
+		});
+		
+		// Test if scripts can be loaded
+		setTimeout(() => {
+			const scripts = document.querySelectorAll('script');
+			let cloudinaryScriptFound = false;
+			scripts.forEach(script => {
+				if (script.src.includes('cloudinary')) {
+					cloudinaryScriptFound = true;
+					console.log('Cloudinary script tag found:', script.src);
+				}
+			});
+			
+			if (!cloudinaryScriptFound) {
+				console.error('No Cloudinary script tag found in document');
+				updateStatus('Warning: Cloudinary script tag not found', true);
+			}
+		}, 1000);
+	</script>
+</body>
+</html>
